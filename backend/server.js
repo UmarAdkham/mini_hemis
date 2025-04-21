@@ -17,7 +17,7 @@ app.use('/', authRoutes);
 // app.use('/admin', adminRoutes);
 // app.use('/teacher', teacherRoutes);
 app.use('/student', studentRoutes);
-app.use('/teacher', teacherRouutes);
+app.use('/teacher', teacherRoutes);
 
 app.listen(PORT, () => {
   console.log(`Girgitton ${PORT}-portda xizmatda`);
