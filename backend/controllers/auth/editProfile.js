@@ -1,8 +1,8 @@
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const pool = require('../../config/db');
 
 exports.editProfile = async (req, res) => {
-  const user_id = req.user.id;
+  const {user_id} = req.params;
   const { firstname, lastname, username, password } = req.body;
 
   try {
@@ -11,12 +11,11 @@ exports.editProfile = async (req, res) => {
     if (result.rows.length === 0) {
       return res.status(404).json({ message: 'Foydalanuvchi topilmadi' });
     }
-
     const user = result.rows[0];
-    const newFirstname = firstname || user.firstname;
-    const newLastname = lastname || user.lastname;
-    const newUsername = username || user.username;
-    const newPassword = password ? await bcrypt.hash(password, 10) : user.password;
+    const newFirstname = firstname;
+    const newLastname = lastname;
+    const newUsername = username;
+    const newPassword = await bcrypt.hash(password, 10);
 
     await pool.query(
       `UPDATE users 
