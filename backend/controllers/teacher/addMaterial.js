@@ -3,23 +3,32 @@ const pool = require("../../config/db");
 exports.addMaterials = async (req, res) => {
   try {
     const { title, course_id } = req.body;
-    const {filepath} = req.file;
+    const file = req.file ? req.file.filename : null;
+    
+    if (!file) {
+      return res.status(400).send({ message: "Fayl yuklanmadi" });
+    }
+    
     const course = await pool.query("SELECT * FROM courses WHERE id = $1", [
       course_id,
     ]);
+
     if (course.rows.length === 0) {
       return res.status(404).send({ message: "Bunday kurs topilmadi" });
     }
+
     await pool.query(
       "INSERT INTO materials(title, filepath, course_id) VALUES($1, $2, $3)",
-      [title, filepath, course_id]
+      [title, file, course_id]
     );
+
     res.status(201).send({ message: "Material muaffaqiyatli qo'shildi" });
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Material qo'shishda xatolik yuz berdi" });
   }
 };
+
 
 exports.getAllMaterials = async (req, res) => {
   try {
