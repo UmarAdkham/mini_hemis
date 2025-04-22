@@ -41,6 +41,7 @@ exports.getAllMaterials = async (req, res) => {
     const allMaterials = result.rows.map((material) => {
       return {
         ...material,
+        format: material.filepath.split(".").pop(),
         filepath: `http://localhost:4000/uploads/${material.filepath}`
       };
     });

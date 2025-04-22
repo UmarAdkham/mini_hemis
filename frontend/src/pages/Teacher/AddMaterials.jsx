@@ -1,6 +1,7 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
+import axios from "axios";
 import {
   FileTextIcon,
   FileVideoIcon,
@@ -12,81 +13,77 @@ import {
   TrashIcon,
   UploadIcon,
   XIcon,
+  FileExcelIcon,
+  FilePptIcon,
 } from "./Icons"; // Siz o'zingizning ikonlaringizni import qilishingiz mumkin
 
 function AddMaterials() {
   const [activeTab, setActiveTab] = useState("add");
+  const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
-  const [materials, setMaterials] = useState([
-    {
-      id: 1,
-      title: "JavaScript asoslari",
-      course: "Web Dasturlash",
-      type: "Ma'ruza",
-      format: "pdf",
-      size: "2.4 MB",
-      date: "2023-10-15",
-      access: "Hammaga ochiq",
-    },
-    {
-      id: 2,
-      title: "React komponentlari",
-      course: "Web Dasturlash",
-      type: "Amaliy mashg'ulot",
-      format: "pptx",
-      size: "5.1 MB",
-      date: "2023-10-18",
-      access: "Faqat ro'yxatdan o'tganlarga",
-    },
-    {
-      id: 3,
-      title: "Ma'lumotlar bazasi bilan ishlash",
-      course: "Ma'lumotlar Ilmi",
-      type: "Ma'ruza",
-      format: "pdf",
-      size: "3.7 MB",
-      date: "2023-10-20",
-      access: "Premium foydalanuvchilarga",
-    },
-    {
-      id: 4,
-      title: "UI/UX dizayn asoslari",
-      course: "Dizayn",
-      type: "Amaliy mashg'ulot",
-      format: "zip",
-      size: "15.2 MB",
-      date: "2023-10-22",
-      access: "Hammaga ochiq",
-    },
-    {
-      id: 5,
-      title: "Flutter bilan mobil dasturlash",
-      course: "Mobil Dasturlash",
-      type: "Ma'ruza",
-      format: "xlsx",
-      size: "1.8 MB",
-      date: "2023-10-25",
-      access: "Faqat ro'yxatdan o'tganlarga",
-    },
-  ]);
+  const [materials, setMaterials] = useState([]);
+  
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0]);
     }
   };
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(file);
-  }
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("file", file);
+    formData.append("course_id", 2);
+
+    const addMaterial = async () => {
+      try {
+        const response = await axios.post(
+          `http://localhost:4000/teacher/add-materials`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        if (response) {
+          document.querySelector(".success").classList.remove("hidden");
+          document.getElementById("success-msg").textContent = response.data.message;
+          fetchMaterials();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      finally {
+        setTitle("");
+        setFile(null);
+      }
+    };
+
+    if (!title && !file) {
+      document.querySelector(".info").classList.remove("hidden");
+      document.getElementById("info-msg").textContent =
+        "Iltimos, barcha maydonlarni to‘liq to‘ldiring.";
+      return;
+    }else if (!title) {
+      document.querySelector(".info").classList.remove("hidden");
+      document.getElementById("info-msg").textContent =
+        "Iltimos, material nomini kiriting.";
+      return;
+    }else if (!file) {
+      document.querySelector(".info").classList.remove("hidden");
+      document.getElementById("info-msg").textContent =
+        "Iltimos, faylni tanlang.";
+      return;
+    }
+    addMaterial();
+  };
 
   const removeFile = () => {
     setFile(null);
   };
-
-
-
 
   // Helper function to get the appropriate icon based on file format
   const getFileIcon = (format) => {
@@ -97,11 +94,12 @@ function AddMaterials() {
         return <FileTextIcon className="h-5 w-5" />;
       case "ppt":
       case "pptx":
+        return <FilePptIcon className="h-5 w-5" />;
       case "mp4":
         return <FileVideoIcon className="h-5 w-5" />;
       case "xls":
       case "xlsx":
-        return <FileSpreadsheetIcon className="h-5 w-5" />;
+        return <FileExcelIcon className="h-5 w-5" />;
       case "zip":
       case "rar":
         return <FileArchiveIcon className="h-5 w-5" />;
@@ -109,6 +107,22 @@ function AddMaterials() {
         return <FileTextIcon className="h-5 w-5" />;
     }
   };
+
+  const fetchMaterials = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/teacher/get-all-materials`
+      );
+      if (response) {
+        setMaterials(response.data.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    fetchMaterials();
+  }, []);
 
   return (
     <div className="container mx-auto py-10 px-4">
@@ -150,8 +164,8 @@ function AddMaterials() {
             </p>
           </div>
 
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <form className="space-y-6 " onSubmit={handleSubmit}>
+            <div className="w-full">
               <div>
                 <label
                   htmlFor="title"
@@ -162,22 +176,9 @@ function AddMaterials() {
                 <input
                   type="text"
                   id="title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                   placeholder="Material nomini kiriting"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="course"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Kurs(id)
-                </label>
-                <input
-                  type="number"
-                  id="title"
-                  placeholder="Kurs idsini kiriting"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
@@ -236,16 +237,18 @@ function AddMaterials() {
                   )}
                 </label>
               </div>
+              <div className="p-4 my-4 text-green-800 rounded-lg bg-green-50 border border-green-300 hidden success" role="alert">
+                <span className="font-medium">Muvaffaqiyat!</span> <span id="success-msg"></span>
+              </div>
 
-              {!file && (
-                <button
-                  type="button"
-                  className="mt-2 w-full border border-gray-300 text-gray-700 rounded-md px-4 py-2 hover:bg-gray-50"
-                  onClick={() => document.getElementById("file-upload").click()}
-                >
-                  Fayl Tanlash
-                </button>
-              )}
+              <div className="p-4 my-4 text-red-800 rounded-lg bg-red-50 border border-red-300 hidden error" role="alert">
+                <span className="font-medium">Xatolik!</span> <span id="error-msg"></span>
+              </div>
+
+              <div className="p-4 my-4 text-blue-800 bg-blue-50 border border-blue-300 rounded-lg hidden info" role="alert">
+                <span className="font-medium">Eslatma!</span> <span id="info-msg"></span>
+              </div>
+
             </div>
 
             <button
@@ -281,7 +284,7 @@ function AddMaterials() {
                       <div>
                         <h3 className="font-medium">{material.title}</h3>
                         <div className="flex flex-wrap gap-2 mt-1 text-sm text-gray-500">
-                          <span>{material.course}</span>
+                          <span>{material.title}</span>
                         </div>
                       </div>
                     </div>
