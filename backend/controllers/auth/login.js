@@ -1,19 +1,29 @@
-const pool = require("../config/db");
-// const bcrypt = require("bcrypt");
+const pool = require("../../config/db");
+const bcrypt = require("bcrypt");
 
 exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
+    const result = await pool.query(
+      'SELECT id, firstname, lastname, username, password FROM users WHERE username = $1',
+      [username]
+    );
     if (result.rows.length === 0) {
       return res.status(404).json({ message: "Invalid username or password" });
     }
-    const result = await pool.query(
-      `SELECT id, firstname, lastname, username FROM users WHERE username = $1 and password = $2`,
-      [username, password]
-    );
-    res.status(200).json({ message: "invalid message" });
+
+    const user = result.rows[0];
+    const passwordMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ message: "Invalid username or password" });
+    }
+    res.status(200).json({
+      message: "Login successful",
+      user: { id: user.id, firstname: user.firstname, lastname: user.lastname, username: user.username }
+    });
   } catch (err) {
-    console.log(err.message);
-    res.status(500).send("There is something wrong with the server.");
+    console.error("Login error:", err.message);
+    res.status(500).send("Server error occurred");
   }
 };

@@ -11,6 +11,7 @@ exports.editProfile = async (req, res) => {
     if (result.rows.length === 0) {
       return res.status(404).json({ message: 'Foydalanuvchi topilmadi' });
     }
+    const user = result.rows[0];
     const newFirstname = firstname;
     const newLastname = lastname;
     const newUsername = username;
