@@ -22,58 +22,7 @@ function AddMaterials() {
   const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
   const [materials, setMaterials] = useState([]);
-  // const [materials, setMaterials] = useState([
-  //   {
-  //     id: 1,
-  //     title: "JavaScript asoslari",
-  //     course: "Web Dasturlash",
-  //     type: "Ma'ruza",
-  //     format: "pdf",
-  //     size: "2.4 MB",
-  //     date: "2023-10-15",
-  //     access: "Hammaga ochiq",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "React komponentlari",
-  //     course: "Web Dasturlash",
-  //     type: "Amaliy mashg'ulot",
-  //     format: "pptx",
-  //     size: "5.1 MB",
-  //     date: "2023-10-18",
-  //     access: "Faqat ro'yxatdan o'tganlarga",
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Ma'lumotlar bazasi bilan ishlash",
-  //     course: "Ma'lumotlar Ilmi",
-  //     type: "Ma'ruza",
-  //     format: "pdf",
-  //     size: "3.7 MB",
-  //     date: "2023-10-20",
-  //     access: "Premium foydalanuvchilarga",
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "UI/UX dizayn asoslari",
-  //     course: "Dizayn",
-  //     type: "Amaliy mashg'ulot",
-  //     format: "zip",
-  //     size: "15.2 MB",
-  //     date: "2023-10-22",
-  //     access: "Hammaga ochiq",
-  //   },
-  //   {
-  //     id: 5,
-  //     title: "Flutter bilan mobil dasturlash",
-  //     course: "Mobil Dasturlash",
-  //     type: "Ma'ruza",
-  //     format: "xlsx",
-  //     size: "1.8 MB",
-  //     date: "2023-10-25",
-  //     access: "Faqat ro'yxatdan o'tganlarga",
-  //   },
-  // ]);
+  
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
