@@ -7,7 +7,7 @@ exports.getStudenttask = async (req, res) => {
 
     try {
         const query = `
-      SELECT type, title, grade, student_id, task_id
+      SELECT filepath, title, grade, student_id, task_id
       FROM studentwork
       WHERE student_id = $1
     `;
