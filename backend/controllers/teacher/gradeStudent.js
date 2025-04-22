@@ -1,22 +1,29 @@
 const pool = require('pg')
 
-const gradeWork = async (req, res, next) => {
+const gradeWork = async (req, res) => {
     try {
         if (req.user.role !== 'teacher') {
             return res.status(403).json({ error: 'Access denied. Only teachers can grade work.' });
         }
         const { id } = req.params;
-        const { grade } = req.body;
+        const { grade,task_id } = req.body;
         if (!grade || grade < 0 || grade > 5) {
             return res.status(400).json({ error: 'Grade must be between 0 and 5.' });
         }
+
+        if(grade < 2 || grade > 5){
+            res.status(404).json(`Incorrect grade. Please enter correct grade `)
+        } 
+
+
+     
         const workCheck = await pool.query(
             `SELECT sw.*, c.teacher_id 
             FROM studentWork sw 
             JOIN tasks t ON sw.task_id = t.id 
             JOIN courses c ON t.course_id = c.id 
-            WHERE sw.id = $1`,
-            [id]
+            WHERE sw.id = $1 and task_id =$2`,
+            [id,task_id]
         );
         if (workCheck.rows.length === 0) {
             return res.status(404).json({ error: 'Student work not found.' });
