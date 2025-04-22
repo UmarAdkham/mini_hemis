@@ -32,7 +32,7 @@ teacherRouter.put("/:id/grade", gradeWork);
 teacherRouter.post("/delete-student/:id", deleteStudent);
 
 // courses routes
-teacherRouter.get("/all-courses", getAllCourses);
+teacherRouter.get("/:teacherId/courses", getAllCourses);
 teacherRouter.get("/course-students", viewCourseStudents);
 
 module.exports = teacherRouter;
