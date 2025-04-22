@@ -5,6 +5,6 @@ const { editProfile } = require("../controllers/auth/editProfile");
 const authRoutes = express.Router();
 
 authRoutes.get("/login", login);
-authRoutes.patch("/:user_id/edit-profile", editProfile);
+authRoutes.put('/editProfile/:user_id', editProfile);
 
 module.exports = authRoutes;

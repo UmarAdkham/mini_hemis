@@ -1,5 +1,4 @@
 const pool = require("../../config/db");
-
 exports.viewCourseStudents = async (req, res) => {
   try {
     const query = `
