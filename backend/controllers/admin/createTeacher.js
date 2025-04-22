@@ -4,10 +4,12 @@ require('dotenv').config();
 
 const pool = new Pool({
   connectionString: process.env.DB_URL,
-  ssl: { rejectUnauthorized: false },
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
-const createStudent = async (req, res) => {
+const createTeacher = async (req, res) => {
   const { firstname, lastname, username, password } = req.body;
 
   if (!firstname || !lastname || !username || !password) {
@@ -23,13 +25,13 @@ const createStudent = async (req, res) => {
       VALUES ($1, $2, $3, $4, $5)
       RETURNING id, firstname, lastname, username, role;
     `;
-    const values = [firstname, lastname, username, hashedPassword, 'student'];
+    const values = [firstname, lastname, username, hashedPassword, 'teacher'];
 
     const result = await pool.query(query, values);
 
     res.status(201).json({
-      message: 'Talaba muvaffaqiyatli yaratildi!',
-      student: result.rows[0],
+      message: 'O\'qituvchi muvaffaqiyatli yaratildi!',
+      teacher: result.rows[0],
     });
   } catch (error) {
     if (error.code === '23505') {
@@ -40,4 +42,4 @@ const createStudent = async (req, res) => {
   }
 };
 
-module.exports = createStudent;
+module.exports = createTeacher;
