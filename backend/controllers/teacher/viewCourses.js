@@ -18,3 +18,15 @@ exports.getAllCourses = async (req, res) => {
     res.status(500).send({ message: "Kurslarni olishda xatolik yuz berdi" });
   }
 };
+
+
+exports.allCourse = async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT * FROM courses`)
+    res.status(200).json(result.rows)
+  } catch (error) {
+    res.json(error)
+  }
+
+}
