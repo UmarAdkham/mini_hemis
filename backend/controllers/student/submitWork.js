@@ -1,20 +1,28 @@
-const pool = require("../../config/db");
-require('dotenv').config();
+const bcrypt = require("bcrypt");
+const pool = require('../../config/db')
+require("dotenv").config();
 
 
 
 exports.submitTask = async (req, res) => {
     try {
-        const { title, description } = req.body
-        const { course_id } = req.params
+        const { title, grade } = req.body;
+        const { taskId } = req.params;
+        const {studentId} = req.query
+        const filepath = req.file?.path
 
-        if (!title || !description || !course_id) return res.status(400).json({ message: "Missed required fields" })
+        if (!title || !filepath || !taskId || !studentId)
+            return res.status(400).json({ message: "Missed required fields" });
 
-        const result = await pool.query('INSERT INTO task VALUES($1, $2, $3) RETURNING *', [title, description, course_id])
-        res.status(201).json(result.rows[0])
+        const result = await pool.query(
+            "INSERT INTO studentwork (title, filepath, grade, task_id, student_id) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+            [title, filepath, grade ?? null, taskId, studentId]
+        );
+
+        res.status(201).json(result.rows[0]);
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: error.message })
+        res.status(500).json({ message: error.message });
     }
-}
+};
 
