@@ -1,8 +1,36 @@
-const express = require('express');
-const createTeacher = require('../controllers/admin/createTeacher');
+const express = require("express");
+const teacherRouter = express.Router();
 
-const router = express.Router();
+// import materials controllers
+const {
+  addMaterials,
+  getAllMaterials,
+  getMaterialById,
+} = require("../controllers/teacher/addMaterial");
 
-router.post('/', createTeacher);
+// import student work controllers
+const { gradeWork } = require("../controllers/teacher/gradeStudent");
 
-module.exports = router;
+// import student controllers
+// ...
+
+// import courses controllers
+const { getAllCourses } = require("../controllers/teacher/viewCourses");
+const { deleteStudent } = require("../controllers/teacher/deleteStudent");
+// ...
+
+// material routes
+teacherRouter.post("/add-materials", addMaterials);
+teacherRouter.get("/get-all-materials", getAllMaterials);
+teacherRouter.get("/get-material-detail/:course_id", getMaterialById);
+
+// grade student work routes
+teacherRouter.put("/:id/grade", gradeWork);
+
+// student routes
+teacherRouter.post("/delete-student/:id", deleteStudent);
+
+// courses routes
+teacherRouter.get("/all-courses", getAllCourses);
+
+module.exports = teacherRouter;
