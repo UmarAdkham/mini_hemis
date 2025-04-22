@@ -12,11 +12,10 @@ const {
 const { gradeWork } = require("../controllers/teacher/gradeStudent");
 
 // import student controllers
-// ...
+const { filterStudentsByGrade } = require("../controllers/teacher/filterStudentsByGrade");
 
 // import courses controllers
 const { getAllCourses } = require("../controllers/teacher/viewCourses");
-// ...
 
 // material routes
 teacherRouter.post("/add-materials", addMaterials);
@@ -27,7 +26,7 @@ teacherRouter.get("/get-material-detail/:course_id", getMaterialById);
 teacherRouter.put("/:id/grade", gradeWork);
 
 // student routes
-// ...
+teacherRouter.get("/filter-students", filterStudentsByGrade); // Talabalarni filtrlash
 
 // courses routes
 teacherRouter.get("/all-courses", getAllCourses);
