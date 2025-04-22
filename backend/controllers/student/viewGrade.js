@@ -1,5 +1,4 @@
 const pool = require('../../config/db');
-const express = require('express');
 
 // Student ID bo'yicha ma'lumotlarni olish
 exports.getStudenttask = async (req, res) => {
