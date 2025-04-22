@@ -3,6 +3,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import routes from "./routes";
 import NotFound from "./pages/notFound";
 import Login from "./pages/login";
+import StudentWorkPage from "./pages/Teacher/TaskGradePage";
+import AdminPage from "./pages/Admin/AddUserpage";
 function App() {
   return (
     <Routes>
@@ -23,6 +25,8 @@ function App() {
         </Route>
       ))}
       {/* Not found */}
+      <Route path="/gradeWork" element={<StudentWorkPage/>}/>
+      <Route path="/addUser" element={<AdminPage/>}/>
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

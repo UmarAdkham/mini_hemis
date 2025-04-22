@@ -5,9 +5,14 @@ const allowedTypes = [
     'image/jpeg',
     'image/webp',
     'application/pdf',
-    'application/msword',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    'application/msword', // .doc
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // .docx
+    'application/vnd.ms-excel', // .xls eski excel
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx yangi excel
+    'application/vnd.ms-powerpoint', // .ppt eski powerpoint
+    'application/vnd.openxmlformats-officedocument.presentationml.presentation' // .pptx yangi powerpoint
 ];
+
 
 
 const uploadStorage = multer.diskStorage({
@@ -32,6 +37,6 @@ const upload = multer({
     fileFilter,
 });
 
-const uploadMiddleware = upload.single('photo');
+const uploadMiddleware = upload.single('file');
 
 module.exports = uploadMiddleware;

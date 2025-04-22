@@ -4,7 +4,8 @@ import TeacherLayout from "../layouts/TeacherLayout";
 import StudentLayout from "../layouts/StudentLayout";
 import Admin from "../pages/Admin";
 import Teacher from "../pages/Teacher";
-import Student from "../pages/Student";
+import Student from "../pages/Student/viewstudent";
+import AddMaterials from "../pages/Teacher/AddMaterials";
 export const routes = [
   {
     path: "/admin",
@@ -22,8 +23,16 @@ export const routes = [
   {
     path: "/student",
     layout: StudentLayout,
-    children: [{ path: "", element: <Student /> }],
-  },
+    children: [
+      { path: "", element: <Student /> },
+      { path: "viewStudent", element: <ViewStudents /> }
+    ],
+  },  
+  {
+    path: "/add-materials",
+    layout: TeacherLayout,
+    children: [{ path: "", element: <AddMaterials /> }],
+  }
 ];
 
 export default routes;
