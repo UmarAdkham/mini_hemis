@@ -2,7 +2,8 @@ const pool = require("../../config/db");
 
 exports.addMaterials = async (req, res) => {
   try {
-    const { title, filepath, course_id } = req.body;
+    const { title, course_id } = req.body;
+    const {filepath} = req.file;
     const course = await pool.query("SELECT * FROM courses WHERE id = $1", [
       course_id,
     ]);
