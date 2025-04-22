@@ -1,6 +1,7 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
+import axios from "axios";
 import {
   FileTextIcon,
   FileVideoIcon,
@@ -16,77 +17,104 @@ import {
 
 function AddMaterials() {
   const [activeTab, setActiveTab] = useState("add");
+  const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
-  const [materials, setMaterials] = useState([
-    {
-      id: 1,
-      title: "JavaScript asoslari",
-      course: "Web Dasturlash",
-      type: "Ma'ruza",
-      format: "pdf",
-      size: "2.4 MB",
-      date: "2023-10-15",
-      access: "Hammaga ochiq",
-    },
-    {
-      id: 2,
-      title: "React komponentlari",
-      course: "Web Dasturlash",
-      type: "Amaliy mashg'ulot",
-      format: "pptx",
-      size: "5.1 MB",
-      date: "2023-10-18",
-      access: "Faqat ro'yxatdan o'tganlarga",
-    },
-    {
-      id: 3,
-      title: "Ma'lumotlar bazasi bilan ishlash",
-      course: "Ma'lumotlar Ilmi",
-      type: "Ma'ruza",
-      format: "pdf",
-      size: "3.7 MB",
-      date: "2023-10-20",
-      access: "Premium foydalanuvchilarga",
-    },
-    {
-      id: 4,
-      title: "UI/UX dizayn asoslari",
-      course: "Dizayn",
-      type: "Amaliy mashg'ulot",
-      format: "zip",
-      size: "15.2 MB",
-      date: "2023-10-22",
-      access: "Hammaga ochiq",
-    },
-    {
-      id: 5,
-      title: "Flutter bilan mobil dasturlash",
-      course: "Mobil Dasturlash",
-      type: "Ma'ruza",
-      format: "xlsx",
-      size: "1.8 MB",
-      date: "2023-10-25",
-      access: "Faqat ro'yxatdan o'tganlarga",
-    },
-  ]);
+  const [materials, setMaterials] = useState([]);
+  // const [materials, setMaterials] = useState([
+  //   {
+  //     id: 1,
+  //     title: "JavaScript asoslari",
+  //     course: "Web Dasturlash",
+  //     type: "Ma'ruza",
+  //     format: "pdf",
+  //     size: "2.4 MB",
+  //     date: "2023-10-15",
+  //     access: "Hammaga ochiq",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "React komponentlari",
+  //     course: "Web Dasturlash",
+  //     type: "Amaliy mashg'ulot",
+  //     format: "pptx",
+  //     size: "5.1 MB",
+  //     date: "2023-10-18",
+  //     access: "Faqat ro'yxatdan o'tganlarga",
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Ma'lumotlar bazasi bilan ishlash",
+  //     course: "Ma'lumotlar Ilmi",
+  //     type: "Ma'ruza",
+  //     format: "pdf",
+  //     size: "3.7 MB",
+  //     date: "2023-10-20",
+  //     access: "Premium foydalanuvchilarga",
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "UI/UX dizayn asoslari",
+  //     course: "Dizayn",
+  //     type: "Amaliy mashg'ulot",
+  //     format: "zip",
+  //     size: "15.2 MB",
+  //     date: "2023-10-22",
+  //     access: "Hammaga ochiq",
+  //   },
+  //   {
+  //     id: 5,
+  //     title: "Flutter bilan mobil dasturlash",
+  //     course: "Mobil Dasturlash",
+  //     type: "Ma'ruza",
+  //     format: "xlsx",
+  //     size: "1.8 MB",
+  //     date: "2023-10-25",
+  //     access: "Faqat ro'yxatdan o'tganlarga",
+  //   },
+  // ]);
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0]);
     }
   };
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(file);
-  }
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("file", file);
+    formData.append("course_id", 2);
+
+    const addMaterial = async () => {
+      try {
+        const response = await axios.post(
+          `http://localhost:4000/teacher/add-materials`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        if (response) {
+          console.log(response.data.message);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+      finally {
+        setTitle("");
+        setFile(null);
+      }
+    };
+
+    addMaterial();
+  };
 
   const removeFile = () => {
     setFile(null);
   };
-
-
-
 
   // Helper function to get the appropriate icon based on file format
   const getFileIcon = (format) => {
@@ -150,8 +178,8 @@ function AddMaterials() {
             </p>
           </div>
 
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <form className="space-y-6 " onSubmit={handleSubmit}>
+            <div className="w-full">
               <div>
                 <label
                   htmlFor="title"
@@ -162,12 +190,14 @@ function AddMaterials() {
                 <input
                   type="text"
                   id="title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                   placeholder="Material nomini kiriting"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
-              <div>
+              {/* <div>
                 <label
                   htmlFor="course"
                   className="block text-sm font-medium text-gray-700 mb-1"
@@ -180,7 +210,7 @@ function AddMaterials() {
                   placeholder="Kurs idsini kiriting"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-              </div>
+              </div> */}
             </div>
 
             <div>
@@ -239,7 +269,7 @@ function AddMaterials() {
 
               {!file && (
                 <button
-                  type="button"
+                  type="submit"
                   className="mt-2 w-full border border-gray-300 text-gray-700 rounded-md px-4 py-2 hover:bg-gray-50"
                   onClick={() => document.getElementById("file-upload").click()}
                 >
