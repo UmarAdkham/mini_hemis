@@ -138,6 +138,25 @@ function AddMaterials() {
     }
   };
 
+  useEffect(() => {
+    const fetchMaterials = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/teacher/get-all-materials`
+        );
+        // setMaterials(response.data);
+        if (response) {
+          console.log(response.data.message);
+          setMaterials(response.data.data);
+        }
+      } catch (error) {
+        console.error(error.response.data.message);
+      }
+    };
+
+    fetchMaterials();
+  }, []);
+
   return (
     <div className="container mx-auto py-10 px-4">
       <h1 className="text-3xl font-bold mb-6">Kurs Materiallari</h1>
