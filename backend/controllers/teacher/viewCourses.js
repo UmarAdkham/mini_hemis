@@ -1,6 +1,6 @@
 const pool = require("../../config/db");
 
-exports.viewCourses = async (req, res) => {
+exports.getAllCourses = async (req, res) => {
   try {
     const teacherId = parseInt(req.params.teacherId)
     const result = await pool.query("SELECT * FROM courses where teacher_id = $1", [teacherId]);

@@ -30,8 +30,7 @@ exports.editProfile = async (req, res) => {
         id: user_id,
         firstname: newFirstname,
         lastname: newLastname,
-        username: newUsername,
-        password:newPassword,
+        username: newUsername
       }
     });
 
