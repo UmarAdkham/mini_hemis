@@ -4,7 +4,7 @@ import TeacherLayout from "../layouts/TeacherLayout";
 import StudentLayout from "../layouts/StudentLayout";
 import Admin from "../pages/Admin";
 import Teacher from "../pages/Teacher";
-import Student from "../pages/Student";
+import Student from "../pages/Student/viewstudent";
 import AddMaterials from "../pages/Teacher/AddMaterials";
 export const routes = [
   {
