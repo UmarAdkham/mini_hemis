@@ -106,9 +106,7 @@ function AddMaterials() {
       const response = await axios.get(
         `http://localhost:4000/teacher/get-all-materials`
       );
-      // setMaterials(response.data);
       if (response) {
-        console.log(response.data.message);
         setMaterials(response.data.data);
       }
     } catch (error) {
