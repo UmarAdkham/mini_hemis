@@ -245,8 +245,8 @@ function AddMaterials() {
                 <span className="font-medium">Xatolik!</span> <span id="error-msg"></span>
               </div>
 
-              <div class="p-4 my-4 text-blue-800 bg-blue-50 border border-blue-300 rounded-lg hidden info" role="alert">
-                <span class="font-medium">Eslatma!</span> <span id="info-msg"></span>
+              <div className="p-4 my-4 text-blue-800 bg-blue-50 border border-blue-300 rounded-lg hidden info" role="alert">
+                <span className="font-medium">Eslatma!</span> <span id="info-msg"></span>
               </div>
 
             </div>
