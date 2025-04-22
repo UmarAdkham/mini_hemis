@@ -49,7 +49,8 @@ function AddMaterials() {
           }
         );
         if (response) {
-          console.log(response.data.message);
+          document.querySelector(".success").classList.remove("hidden");
+          document.getElementById("success-msg").textContent = response.data.message;
           fetchMaterials();
         }
       } catch (error) {
@@ -62,13 +63,19 @@ function AddMaterials() {
     };
 
     if (!title && !file) {
-      alert("Iltimos, material nomini va faylni kiriting.");
+      document.querySelector(".info").classList.remove("hidden");
+      document.getElementById("info-msg").textContent =
+        "Iltimos, barcha maydonlarni to‘liq to‘ldiring.";
       return;
     }else if (!title) {
-      alert("Iltimos, material nomini kiriting.");
+      document.querySelector(".info").classList.remove("hidden");
+      document.getElementById("info-msg").textContent =
+        "Iltimos, material nomini kiriting.";
       return;
     }else if (!file) {
-      alert("Iltimos, faylni tanlang.");
+      document.querySelector(".info").classList.remove("hidden");
+      document.getElementById("info-msg").textContent =
+        "Iltimos, faylni tanlang.";
       return;
     }
     addMaterial();
@@ -110,7 +117,7 @@ function AddMaterials() {
         setMaterials(response.data.data);
       }
     } catch (error) {
-      console.error(error.response.data.message);
+      console.error(error);
     }
   };
   useEffect(() => {
@@ -175,21 +182,6 @@ function AddMaterials() {
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-
-              {/* <div>
-                <label
-                  htmlFor="course"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Kurs(id)
-                </label>
-                <input
-                  type="number"
-                  id="title"
-                  placeholder="Kurs idsini kiriting"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div> */}
             </div>
 
             <div>
@@ -245,6 +237,18 @@ function AddMaterials() {
                   )}
                 </label>
               </div>
+              <div className="p-4 my-4 text-green-800 rounded-lg bg-green-50 border border-green-300 hidden success" role="alert">
+                <span className="font-medium">Muvaffaqiyat!</span> <span id="success-msg"></span>
+              </div>
+
+              <div className="p-4 my-4 text-red-800 rounded-lg bg-red-50 border border-red-300 hidden error" role="alert">
+                <span className="font-medium">Xatolik!</span> <span id="error-msg"></span>
+              </div>
+
+              <div class="p-4 my-4 text-blue-800 bg-blue-50 border border-blue-300 rounded-lg hidden info" role="alert">
+                <span class="font-medium">Eslatma!</span> <span id="info-msg"></span>
+              </div>
+
             </div>
 
             <button
