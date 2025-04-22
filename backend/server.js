@@ -3,9 +3,9 @@ require('dotenv').config();
 const express = require("express");
 const app = express();
 
-const studentRoutes = require('./routes/studentRoutes');
 const teacherRoutes = require('./routes/teacherRoutes');
 const authRoutes = require('./routes/authRoutes');
+const studentRouter = require("./routes/studentRoutes");
 
 
 app.use(cors());
@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 4000;
 app.use('/', authRoutes);
 // app.use('/admin', adminRoutes);
 // app.use('/teacher', teacherRoutes);
-app.use('/student', studentRoutes);
+app.use('/student', studentRouter);
 app.use('/teacher', teacherRoutes);
 
 app.listen(PORT, () => {
