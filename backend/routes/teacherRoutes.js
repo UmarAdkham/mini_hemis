@@ -16,6 +16,7 @@ const { gradeWork } = require("../controllers/teacher/gradeStudent");
 
 // import courses controllers
 const { getAllCourses } = require("../controllers/teacher/viewCourses");
+const { deleteStudent } = require("../controllers/teacher/deleteStudent");
 // ...
 
 // material routes
@@ -27,7 +28,7 @@ teacherRouter.get("/get-material-detail/:course_id", getMaterialById);
 teacherRouter.put("/:id/grade", gradeWork);
 
 // student routes
-// ...
+teacherRouter.post("/delete-student/:id", deleteStudent);
 
 // courses routes
 teacherRouter.get("/all-courses", getAllCourses);
