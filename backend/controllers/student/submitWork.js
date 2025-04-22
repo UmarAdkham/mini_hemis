@@ -1,7 +1,5 @@
-const bcrypt = require("bcrypt");
 const pool = require('../../config/db')
 require("dotenv").config();
-
 
 
 exports.submitTask = async (req, res) => {
@@ -25,4 +23,5 @@ exports.submitTask = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 
