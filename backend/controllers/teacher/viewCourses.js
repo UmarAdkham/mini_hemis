@@ -6,7 +6,7 @@ exports.viewCourses = async (req, res) => {
     const result = await pool.query(
         `SELECT * FROM  courses WHERE userId = $1`, [teacherId]
     )
-    res.status(200).json(result.rows); // Kurslar ro'yxatini yuborish
+    res.status(200).json(result.rows);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Serverda xatolik mavjud' });
