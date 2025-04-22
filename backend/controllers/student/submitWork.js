@@ -1,12 +1,9 @@
 const bcrypt = require('bcrypt');
-const { Pool } = require('pg');
+const pool = require("../../config/db");
 require('dotenv').config();
 
 
-const pool = new Pool({
-    connectionString: process.env.DB_URL,
-    ssl: { rejectUnauthorized: false },
-});
+
 
 
 exports.submitTask = async (req, res) => {
