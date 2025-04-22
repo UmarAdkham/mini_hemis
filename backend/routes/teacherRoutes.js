@@ -18,10 +18,11 @@ const { gradeWork } = require("../controllers/teacher/gradeStudent");
 const { getAllCourses } = require("../controllers/teacher/viewCourses");
 const { deleteStudent } = require("../controllers/teacher/deleteStudent");
 const { viewCourseStudents } = require("../controllers/student/viewCourses");
+const uploadMiddleware = require("../middlewares/uploadFile");
 // ...
 
 // material routes
-teacherRouter.post("/add-materials", addMaterials);
+teacherRouter.post("/add-materials", uploadMiddleware, addMaterials);
 teacherRouter.get("/get-all-materials", getAllMaterials);
 teacherRouter.get("/get-material-detail/:course_id", getMaterialById);
 
