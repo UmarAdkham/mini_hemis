@@ -29,7 +29,7 @@ teacherRouter.get("/get-material-detail/:course_id", getMaterialById);
 teacherRouter.put("/:id/grade", gradeWork);
 
 // student routes
-teacherRouter.post("/delete-student/:id", deleteStudent);
+teacherRouter.delete("/delete-student/:id", deleteStudent);
 
 // courses routes
 teacherRouter.get("/:teacherId/courses", getAllCourses);
