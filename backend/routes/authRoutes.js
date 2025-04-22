@@ -4,7 +4,7 @@ const { editProfile } = require("../controllers/auth/editProfile");
 
 const authRoutes = express.Router();
 
-authRoutes.get("/login", login);
+authRoutes.post("/login", login);
 authRoutes.put('/editProfile/:user_id', editProfile);
 
 module.exports = authRoutes;

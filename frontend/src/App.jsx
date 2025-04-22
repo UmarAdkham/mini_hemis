@@ -1,20 +1,31 @@
-import React from 'react'
-import './App.css'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import ViewPage from './pages/ViewPage'
-import HomePage from './pages/HomePage'
-
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import routes from "./routes";
+import NotFound from "./pages/notFound";
+import Login from "./pages/login";
 function App() {
   return (
-    <div>
-      <BrowserRouter>
-      <Routes>
-        <Route path="/viewgrade" element={<ViewPage />} />
-        <Route path="/" element={<HomePage />} />
-      </Routes>
-      </BrowserRouter>
-    </div>
-  )
+    <Routes>
+      {/* Public Route */}
+      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/login" element={<Login />} />
+      {/* Private Routes */}
+      {routes.map(({ path, layout: Layout, children }) => (
+        <Route key={path} path={path} element={<Layout />}>
+          {children.map(({ path: childPath, element }, idx) => (
+            <Route
+              key={idx}
+              index={childPath === ""}
+              path={childPath}
+              element={element}
+            />
+          ))}
+        </Route>
+      ))}
+      {/* Not found */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;
