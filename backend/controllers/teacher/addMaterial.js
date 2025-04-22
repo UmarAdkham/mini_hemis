@@ -38,9 +38,18 @@ exports.getAllMaterials = async (req, res) => {
       return res.status(404).send({ message: "Material topilmadi" });
     }
 
+    const allMaterials = result.rows.map((material) => {
+      return {
+        ...material,
+        filepath: `http://localhost:4000/uploads/${material.filepath}`
+      };
+    });
+    
+    
+
     res.status(200).json({
       message: "Materiallar muvaffaqiyatli olindi",
-      data: result.rows,
+      data: allMaterials,
     });
   } catch (error) {
     console.error("Xatolik:", error);
