@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 4000;
 // app.use('/admin', adminRoutes);
 // app.use('/teacher', teacherRoutes);
 // app.use('/student', studentRoutes);
-
+// app.use('/api', userRoutes);
 app.listen(PORT, () => {
   console.log(`Girgitton ${PORT}-portda xizmatda`);
 });
