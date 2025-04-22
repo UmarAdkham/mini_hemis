@@ -13,6 +13,8 @@ import {
   TrashIcon,
   UploadIcon,
   XIcon,
+  FileExcelIcon,
+  FilePptIcon,
 } from "./Icons"; // Siz o'zingizning ikonlaringizni import qilishingiz mumkin
 
 function AddMaterials() {
@@ -99,6 +101,7 @@ function AddMaterials() {
         );
         if (response) {
           console.log(response.data.message);
+          fetchMaterials();
         }
       } catch (error) {
         console.log(error);
@@ -109,6 +112,16 @@ function AddMaterials() {
       }
     };
 
+    if (!title && !file) {
+      alert("Iltimos, material nomini va faylni kiriting.");
+      return;
+    }else if (!title) {
+      alert("Iltimos, material nomini kiriting.");
+      return;
+    }else if (!file) {
+      alert("Iltimos, faylni tanlang.");
+      return;
+    }
     addMaterial();
   };
 
@@ -125,11 +138,12 @@ function AddMaterials() {
         return <FileTextIcon className="h-5 w-5" />;
       case "ppt":
       case "pptx":
+        return <FilePptIcon className="h-5 w-5" />;
       case "mp4":
         return <FileVideoIcon className="h-5 w-5" />;
       case "xls":
       case "xlsx":
-        return <FileSpreadsheetIcon className="h-5 w-5" />;
+        return <FileExcelIcon className="h-5 w-5" />;
       case "zip":
       case "rar":
         return <FileArchiveIcon className="h-5 w-5" />;
@@ -138,22 +152,21 @@ function AddMaterials() {
     }
   };
 
-  useEffect(() => {
-    const fetchMaterials = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:4000/teacher/get-all-materials`
-        );
-        // setMaterials(response.data);
-        if (response) {
-          console.log(response.data.message);
-          setMaterials(response.data.data);
-        }
-      } catch (error) {
-        console.error(error.response.data.message);
+  const fetchMaterials = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/teacher/get-all-materials`
+      );
+      // setMaterials(response.data);
+      if (response) {
+        console.log(response.data.message);
+        setMaterials(response.data.data);
       }
-    };
-
+    } catch (error) {
+      console.error(error.response.data.message);
+    }
+  };
+  useEffect(() => {
     fetchMaterials();
   }, []);
 
@@ -285,16 +298,6 @@ function AddMaterials() {
                   )}
                 </label>
               </div>
-
-              {!file && (
-                <button
-                  type="submit"
-                  className="mt-2 w-full border border-gray-300 text-gray-700 rounded-md px-4 py-2 hover:bg-gray-50"
-                  onClick={() => document.getElementById("file-upload").click()}
-                >
-                  Fayl Tanlash
-                </button>
-              )}
             </div>
 
             <button
@@ -330,7 +333,7 @@ function AddMaterials() {
                       <div>
                         <h3 className="font-medium">{material.title}</h3>
                         <div className="flex flex-wrap gap-2 mt-1 text-sm text-gray-500">
-                          <span>{material.course}</span>
+                          <span>{material.title}</span>
                         </div>
                       </div>
                     </div>
