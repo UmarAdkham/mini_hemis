@@ -2,7 +2,7 @@ const pool = require('../../config/db')
 require("dotenv").config();
 
 
-exports.submitTask = async (req, res) => {
+const submitWork = async (req, res) => {
     try {
         const { title, grade } = req.body;
         const { taskId } = req.params;
@@ -24,4 +24,4 @@ exports.submitTask = async (req, res) => {
     }
 };
 
-
+module.exports = submitWork
