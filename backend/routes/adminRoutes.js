@@ -11,8 +11,8 @@ const adminRoute = express.Router();
 adminRoute.post("/add-teacher", createTeacher);
 adminRoute.get("/teachers", getAllTeachers);
 adminRoute.post("/add-student", createStudent);
-adminRoute.delete("/delete-teacher", deleteTeacher);
-adminRoute.delete("/delete-student", deleteStudent);
+adminRoute.delete("/delete-teacher/:id", deleteTeacher);
+adminRoute.delete("/delete-student/:id", deleteStudent);
 adminRoute.post("/create-course", createCourse);
 
 module.exports = adminRoute;
