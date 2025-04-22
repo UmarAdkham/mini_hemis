@@ -1,10 +1,10 @@
-const express = require("express");
-const app = express();
+const pool = require("../../config/db");
+
 // teacherlarni o'chirish
 exports.deleteTeacher = async (req, res) => {
   const { id } = req.params;
   try {
-    const result = await pool.query("DELETE FROM teacher WHERE id = $1", [id]);
+    const result = await pool.query("DELETE FROM users WHERE id = $1", [id]);
     if (result.rowCount === 0) {
       return res.status(404).json({ message: "teacher not found" });
     }
