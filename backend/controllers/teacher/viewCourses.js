@@ -1,14 +1,20 @@
-const pool = require('.../config/db')
+const pool = require("../../config/db");
 
 exports.viewCourses = async (req, res) => {
   try {
-    const teacherId = req.user.id; 
-    const result = await pool.query(
-        `SELECT * FROM  courses WHERE userId = $1`, [teacherId]
-    )
-    res.status(200).json(result.rows);
+    const teacherId = parseInt(req.params.teacherId)
+    const result = await pool.query("SELECT * FROM courses where teacher_id = $1", [teacherId]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).send({ message: "Kurslar topilmadi" });
+    }
+
+    res.status(200).json({
+      message: "Kurslar muvaffaqiyatli olindi",
+      data: result.rows,
+    });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: 'Serverda xatolik mavjud' });
+    console.error(error);
+    res.status(500).send({ message: "Kurslarni olishda xatolik yuz berdi" });
   }
 };
