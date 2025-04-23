@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-function ViewAllCourses({ teacherId }) {
+function ViewAllCourses() {
     const { teacherId } = useParams(); 
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
