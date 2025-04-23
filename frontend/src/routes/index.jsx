@@ -10,6 +10,7 @@ import AddTask from "../pages/Teacher/AddTask";
 import ViewAllCourses from "../pages/Teacher/ViewTeacherCourses"
 import ViewStudents from "../pages/Student/viewstudent";
 import AdminPage from "../pages/Admin/AddUserpage";
+import StudentTable from "../pages/Admin/AllUsers";
 
 export const routes = [
   {
@@ -17,6 +18,7 @@ export const routes = [
     layout: AdminLayout,
     children: [
       { path: "", element: <Admin /> },
+      {path: "all-users", element: <StudentTable />},
       { path: 'add-user', element: <AdminPage /> },
     ],
   },
