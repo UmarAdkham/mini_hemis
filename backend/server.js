@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 4000;
 
 app.use("/", authRoutes);
 
-app.use(authentication); // Middleware for authentication
+app.use(authentication);
 
 app.use("/admin", adminRoute);
 app.use("/student", studentRouter);
