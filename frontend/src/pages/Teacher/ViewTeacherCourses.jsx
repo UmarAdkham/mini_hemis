@@ -41,7 +41,7 @@ function ViewAllCourses() {
     }
 
     return (
-        <div className="max-w-6xl mx-auto px-4 py-10">
+        <div className="text-center  max-w-6xl mx-auto px-4 py-10">
             <h2 className="text-3xl font-bold mb-6 text-center text-indigo-700">O'qituvchining Kurslari</h2>
             {/* <p className="text-center text-gray-600 mb-8 italic">{message}</p> */}
 
