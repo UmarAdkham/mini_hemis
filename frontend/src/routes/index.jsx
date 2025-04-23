@@ -6,6 +6,10 @@ import Admin from "../pages/Admin";
 import Teacher from "../pages/Teacher";
 import Student from "../pages/Student/viewstudent";
 import AddMaterials from "../pages/Teacher/AddMaterials";
+
+import AddTask from "../pages/Teacher/AddTask";
+import ViewAllCourses from "../pages/Teacher/ViewTeacherCourses"
+
 import ViewStudents from "../pages/Student/viewstudent";
 
 import AdminPage from "../pages/Admin/AddUserpage";
@@ -26,7 +30,13 @@ export const routes = [
   {
     path: "/teacher",
     layout: TeacherLayout,
+
     children: [{ path: "", element: <Teacher /> }],
+    children: [
+      { path: "", element: <Teacher /> },
+      { path: "add-materials", element: <AddMaterials /> },
+      { path: "add-task", element: <AddTask/>}
+    ],
   },
   {
     path: "/student",
