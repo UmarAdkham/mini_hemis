@@ -25,7 +25,6 @@ export const routes = [
       { path: "", element: <Teacher /> },
       { path: "add-materials", element: <AddMaterials /> },
       { path: "add-task", element: <AddTask/>}
-      { path: ":teacherId/courses", element: <ViewAllCourses />}
     ],
   },
   {
