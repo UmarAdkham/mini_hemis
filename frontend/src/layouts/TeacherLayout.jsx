@@ -5,7 +5,7 @@ import Sidebar from "../components/sidebar/Sidebar";
 function TeacherLayout() {
   return (
     <div className="flex justify-center">
-      <Sidebar paths={['add-materials']}/>
+      <Sidebar paths={['teacher','teacher/add-materials']}/>
       <main className="flex-1 sm:ml-64">
         <Outlet />
       </main>
