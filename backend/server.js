@@ -16,10 +16,6 @@ app.use(express.json());
 const PORT = process.env.PORT || 4000;
 
 app.use("/", authRoutes);
-
-// Middleware to check token
-app.use(authentication);
-
 app.use("/admin", adminRoute);
 app.use("/student", studentRouter);
 app.use("/teacher", teacherRoutes);

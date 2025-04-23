@@ -22,7 +22,9 @@ function AddMaterials() {
   const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
   const [materials, setMaterials] = useState([]);
-  
+  const token =
+    localStorage.getItem("token") ||
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicm9sZSI6InRlYWNoZXIiLCJpYXQiOjE3NDUzODcxNTUsImV4cCI6MTc0NTM5MDc1NX0.pfrSLtRMemhzlOQiznh3n8vdpSnV5nBpYNbI3QPd01s";
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -45,18 +47,19 @@ function AddMaterials() {
           {
             headers: {
               "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${token}`,
             },
           }
         );
         if (response) {
           document.querySelector(".success").classList.remove("hidden");
-          document.getElementById("success-msg").textContent = response.data.message;
+          document.getElementById("success-msg").textContent =
+            response.data.message;
           fetchMaterials();
         }
       } catch (error) {
         console.log(error);
-      }
-      finally {
+      } finally {
         setTitle("");
         setFile(null);
       }
@@ -67,12 +70,12 @@ function AddMaterials() {
       document.getElementById("info-msg").textContent =
         "Iltimos, barcha maydonlarni to‘liq to‘ldiring.";
       return;
-    }else if (!title) {
+    } else if (!title) {
       document.querySelector(".info").classList.remove("hidden");
       document.getElementById("info-msg").textContent =
         "Iltimos, material nomini kiriting.";
       return;
-    }else if (!file) {
+    } else if (!file) {
       document.querySelector(".info").classList.remove("hidden");
       document.getElementById("info-msg").textContent =
         "Iltimos, faylni tanlang.";
@@ -109,9 +112,15 @@ function AddMaterials() {
   };
 
   const fetchMaterials = async () => {
+    setLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:4000/teacher/get-all-materials`
+        `http://localhost:4000/teacher/get-all-materials`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       if (response) {
         setMaterials(response.data.data);
@@ -119,10 +128,8 @@ function AddMaterials() {
     } catch (error) {
       console.error(error);
     }
+    setLoading(false);
   };
-  useEffect(() => {
-    fetchMaterials();
-  }, []);
 
   return (
     <div className="container mx-auto py-10 px-4">
@@ -147,7 +154,10 @@ function AddMaterials() {
                 ? "border-b-3 border-blue-500 text-blue-600"
                 : "text-gray-500 hover:text-gray-700"
             }`}
-            onClick={() => setActiveTab("list")}
+            onClick={() => {
+              setActiveTab("list");
+              fetchMaterials();
+            }}
           >
             Barcha Materiallar
           </button>
@@ -237,18 +247,29 @@ function AddMaterials() {
                   )}
                 </label>
               </div>
-              <div className="p-4 my-4 text-green-800 rounded-lg bg-green-50 border border-green-300 hidden success" role="alert">
-                <span className="font-medium">Muvaffaqiyat!</span> <span id="success-msg"></span>
+              <div
+                className="p-4 my-4 text-green-800 rounded-lg bg-green-50 border border-green-300 hidden success"
+                role="alert"
+              >
+                <span className="font-medium">Muvaffaqiyat!</span>{" "}
+                <span id="success-msg"></span>
               </div>
 
-              <div className="p-4 my-4 text-red-800 rounded-lg bg-red-50 border border-red-300 hidden error" role="alert">
-                <span className="font-medium">Xatolik!</span> <span id="error-msg"></span>
+              <div
+                className="p-4 my-4 text-red-800 rounded-lg bg-red-50 border border-red-300 hidden error"
+                role="alert"
+              >
+                <span className="font-medium">Xatolik!</span>{" "}
+                <span id="error-msg"></span>
               </div>
 
-              <div className="p-4 my-4 text-blue-800 bg-blue-50 border border-blue-300 rounded-lg hidden info" role="alert">
-                <span className="font-medium">Eslatma!</span> <span id="info-msg"></span>
+              <div
+                className="p-4 my-4 text-blue-800 bg-blue-50 border border-blue-300 rounded-lg hidden info"
+                role="alert"
+              >
+                <span className="font-medium">Eslatma!</span>{" "}
+                <span id="info-msg"></span>
               </div>
-
             </div>
 
             <button
@@ -262,6 +283,7 @@ function AddMaterials() {
       )}
 
       {/* Materials List */}
+
       {activeTab === "list" && (
         <div className="bg-white rounded-lg shadow-md p-6">
           <div className="mb-6">
@@ -271,25 +293,25 @@ function AddMaterials() {
 
           <div className="space-y-6">
             <div className="space-y-4">
-              {materials.length > 0 ? (
-                materials.map((material) => (
-                  <div
-                    key={material.id}
-                    className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
-                  >
-                    <div className="flex items-center gap-3 mb-3 md:mb-0">
-                      <div className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-100 text-blue-600">
-                        {getFileIcon(material.format)}
-                      </div>
-                      <div>
-                        <h3 className="font-medium">{material.title}</h3>
-                        <div className="flex flex-wrap gap-2 mt-1 text-sm text-gray-500">
-                          <span>{material.title}</span>
+              {materials.length > 0
+                ? materials.map((material) => (
+                    <div
+                      key={material.id}
+                      className="flex flex-col md:flex-row items-start md:items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                    >
+                      <div className="flex items-center gap-3 mb-3 md:mb-0">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-100 text-blue-600">
+                          {getFileIcon(material.format)}
+                        </div>
+                        <div>
+                          <h3 className="font-medium">{material.title}</h3>
+                          <div className="flex flex-wrap gap-2 mt-1 text-sm text-gray-500">
+                            <span>{material.title}</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    {/* <div className="flex items-center gap-3 w-full md:w-auto">
+                      {/* <div className="flex items-center gap-3 w-full md:w-auto">
                       <div className="relative group">
                         <button className="p-2 rounded-full hover:bg-gray-100">
                           <MoreHorizontalIcon className="h-4 w-4" />
@@ -312,13 +334,20 @@ function AddMaterials() {
                         </div>
                       </div>
                     </div> */}
-                  </div>
-                ))
-              ) : (
-                <div className="text-center py-10 text-gray-500">
-                  Materiallar topilmadi
-                </div>
-              )}
+                    </div>
+                  ))
+                : (materials.length === 0 && (
+                    <div className="flex items-center justify-center py-10">
+                      <p className="text-gray-500">
+                        Hozircha material mavjud emas.
+                      </p>
+                    </div>
+                  ),
+                  (
+                    <div className="flex items-center justify-center min-h-[100px]">
+                      <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                    </div>
+                  ))}
             </div>
           </div>
         </div>
