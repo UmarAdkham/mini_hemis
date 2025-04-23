@@ -1,4 +1,4 @@
-"use client";
+
 import React, { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
@@ -23,8 +23,7 @@ function AddMaterials() {
   const [file, setFile] = useState(null);
   const [materials, setMaterials] = useState([]);
   const token =
-    localStorage.getItem("token") ||
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicm9sZSI6InRlYWNoZXIiLCJpYXQiOjE3NDUzODcxNTUsImV4cCI6MTc0NTM5MDc1NX0.pfrSLtRMemhzlOQiznh3n8vdpSnV5nBpYNbI3QPd01s";
+    localStorage.getItem("token");
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -112,7 +111,6 @@ function AddMaterials() {
   };
 
   const fetchMaterials = async () => {
-    setLoading(true);
     try {
       const response = await axios.get(
         `http://localhost:4000/teacher/get-all-materials`,
@@ -128,7 +126,6 @@ function AddMaterials() {
     } catch (error) {
       console.error(error);
     }
-    setLoading(false);
   };
 
   return (
