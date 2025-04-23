@@ -35,32 +35,32 @@ const SubmitWork = () => {
     }
 
     return (
-        <div className="align-middle p-4 max-w-md mx-auto">
-      <h2 className="text-xl font-semibold mb-4">Submit Task</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="border w-full px-3 py-2"
-          required
-        />
-        <input
-          type="file"
-          onChange={(e) => setFile(e.target.files[0])}
-          className="w-full"
-          required
-        />
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded"
-        >
-          Submit
-        </button>
-        {message && <p className="text-sm text-red-600">{message}</p>}
-      </form>
-    </div>
+        <div className="flex flex-col justify-center items-center p-10 max-w-md mx-auto border rounded-2xl">
+            <h2 className="text-xl font-semibold mb-4">Submit Task</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+                <input
+                    type="text"
+                    placeholder="Title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="border w-full px-3 py-2"
+                    required
+                />
+                <input
+                    type="file"
+                    onChange={(e) => setFile(e.target.files[0])}
+                    className="w-full"
+                    required
+                />
+                <button
+                    type="submit"
+                    className="bg-blue-600 text-white px-4 py-2 rounded"
+                >
+                    Submit
+                </button>
+                {message && <p className="text-sm text-red-600">{message}</p>}
+            </form>
+        </div>
     )
 }
 
