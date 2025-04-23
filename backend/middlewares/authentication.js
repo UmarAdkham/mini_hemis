@@ -8,6 +8,11 @@ exports.authentication = async (req, res, next) => {
 		}
 	
 		const decoded = jwt.verify(token, process.env.SECRET_KEY);
+		req.user = {
+			id: decoded.id,
+			role: decoded.role
+		};
+		
 		next();
 	} catch (error) {
 		res.status(400).json({message: error})
