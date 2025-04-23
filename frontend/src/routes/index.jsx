@@ -7,13 +7,15 @@ import Teacher from "../pages/Teacher";
 import Student from "../pages/Student/viewstudent";
 import AddMaterials from "../pages/Teacher/AddMaterials";
 import ViewAllCourses from "../pages/Teacher/ViewTeacherCourses";
+import ViewStudents from "../pages/Student/viewstudent";
+
 export const routes = [
   {
     path: "/admin",
     layout: AdminLayout,
     children: [
       { path: "", element: <Admin /> },
-      // { path: 'settings', element: <Settings /> }, // qo'shimcha sahifalar
+      // { path: 'settings', element: <Settings /> },
     ],
   },
   {
