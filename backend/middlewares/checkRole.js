@@ -16,4 +16,3 @@ exports.checkRole = (allowedRoles) => {
   };
 };
 
-['student'].includes('teacher')
