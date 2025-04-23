@@ -22,7 +22,6 @@ function AddMaterials() {
   const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
   const [materials, setMaterials] = useState([]);
-  const [loading, setLoading] = useState(false);
   const token =
     localStorage.getItem("token") ||
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicm9sZSI6InRlYWNoZXIiLCJpYXQiOjE3NDUzODcxNTUsImV4cCI6MTc0NTM5MDc1NX0.pfrSLtRMemhzlOQiznh3n8vdpSnV5nBpYNbI3QPd01s";
