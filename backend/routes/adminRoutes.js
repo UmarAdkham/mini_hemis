@@ -19,6 +19,6 @@ adminRoute.post("/add-student", createStudent);
 adminRoute.get("/filter-students", filterAllStudentsByGrade);
 adminRoute.delete("/delete-teacher/:id", deleteTeacher);
 adminRoute.delete("/delete-student/:id", deleteStudent);
-adminRoute.post("/create-course", createCourse);
+adminRoute.post("/create-course/:teacher_id", createCourse);
 
 module.exports = adminRoute;
