@@ -23,12 +23,11 @@ function ViewAllCourses() {
                 setMessage(response.data.message);
             } catch (error) {
                 console.log(error);
-                
-                // if (error.response && error.response.status === 404) {
-                //     setMessage('Kurslar topilmadi');
-                // } else {
-                //     setMessage('Kurslarni olishda xatolik yuz berdi');
-                // }
+                if (error.response && error.response.status === 404) {
+                    setMessage('Kurslar topilmadi');
+                } else {
+                    setMessage('Kurslarni olishda xatolik yuz berdi');
+                }
             } finally {
                 setLoading(false);
             }
@@ -54,12 +53,12 @@ function ViewAllCourses() {
                             className="bg-gradient-to-r from-white to-blue-50 border border-blue-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out"
                         >
                             <h3 className="text-2xl font-bold text-gray-800 mb-3">{course.name}</h3>
-                            <span className="inline-block bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full mb-4">
-                                Teacher ID: {course.teacher_id}
-                            </span>
-                            <p className="text-gray-700 leading-relaxed">
+                            {/* <span className="inline-block bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full mb-4">
+                                Teacher ID: {course.description}
+                            </span> */}
+                            {/* <p className="text-gray-700 leading-relaxed">
                                 {course.description || "Bu kurs haqida batafsil ma'lumot yo'q."}
-                            </p>
+                            </p> */}
                         </div>
                     ))}
                 </div>
