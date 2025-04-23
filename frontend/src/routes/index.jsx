@@ -6,7 +6,8 @@ import Admin from "../pages/Admin";
 import Teacher from "../pages/Teacher";
 import Student from "../pages/Student/viewstudent";
 import AddMaterials from "../pages/Teacher/AddMaterials";
-import ViewAllCourses from "../pages/Teacher/ViewTeacherCourses";
+import AddTask from "../pages/Teacher/AddTask";
+import ViewAllCourses from "../pages/Teacher/ViewTeacherCourses"
 import ViewStudents from "../pages/Student/viewstudent";
 import AdminPage from "../pages/Admin/AddUserpage";
 import StudentTable from "../pages/Admin/AllUsers";
@@ -27,7 +28,7 @@ export const routes = [
     children: [
       { path: "", element: <Teacher /> },
       { path: "add-materials", element: <AddMaterials /> },
-      { path: ":teacherId/courses", element: <ViewAllCourses />}
+      { path: "add-task", element: <AddTask/>}
     ],
   },
   {
