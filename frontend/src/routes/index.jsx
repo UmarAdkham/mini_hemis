@@ -9,7 +9,7 @@ import AddMaterials from "../pages/Teacher/AddMaterials";
 import ViewAllCourses from "../pages/Teacher/ViewTeacherCourses";
 import ViewStudents from "../pages/Student/viewstudent";
 import AdminPage from "../pages/Admin/AddUserpage";
-import StudentTable from "../pages/Student/AllUsers";
+import StudentTable from "../pages/Admin/AllUsers";
 
 export const routes = [
   {
