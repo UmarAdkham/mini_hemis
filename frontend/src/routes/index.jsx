@@ -6,6 +6,7 @@ import Admin from "../pages/Admin";
 import Teacher from "../pages/Teacher";
 import Student from "../pages/Student/viewstudent";
 import AddMaterials from "../pages/Teacher/AddMaterials";
+import ViewStudents from "../pages/Student/viewstudent";
 export const routes = [
   {
     path: "/admin",
