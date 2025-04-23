@@ -6,12 +6,14 @@ import Admin from "../pages/Admin";
 import Teacher from "../pages/Teacher";
 import Student from "../pages/Student/viewstudent";
 import AddMaterials from "../pages/Teacher/AddMaterials";
+import CreateCourse from "../pages/Admin/createCourse";
 export const routes = [
   {
     path: "/admin",
     layout: AdminLayout,
     children: [
       { path: "", element: <Admin /> },
+      { path: "create-course", element: <CreateCourse /> },
       // { path: 'settings', element: <Settings /> }, // qo'shimcha sahifalar
     ],
   },
@@ -25,14 +27,14 @@ export const routes = [
     layout: StudentLayout,
     children: [
       { path: "", element: <Student /> },
-      { path: "viewStudent", element: <ViewStudents /> }
+      // { path: "viewStudent", element: <ViewStudents /> },
     ],
-  },  
+  },
   {
     path: "/add-materials",
     layout: TeacherLayout,
     children: [{ path: "", element: <AddMaterials /> }],
-  }
+  },
 ];
 
 export default routes;
