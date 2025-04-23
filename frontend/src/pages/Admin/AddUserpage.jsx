@@ -2,102 +2,65 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const AdminPage = () => {
-  const [teacherForm, setTeacherForm] = useState({
+  const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
     username: "",
     password: "",
+    role: "teacher", // Default to teacher
   });
-  const [studentForm, setStudentForm] = useState({
-    firstname: "",
-    lastname: "",
-    username: "",
-    password: "",
-  });
-  const [teacherError, setTeacherError] = useState("");
-  const [teacherSuccess, setTeacherSuccess] = useState("");
-  const [studentError, setStudentError] = useState("");
-  const [studentSuccess, setStudentSuccess] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const handleTeacherChange = (e) => {
-    setTeacherForm({ ...teacherForm, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleStudentChange = (e) => {
-    setStudentForm({ ...studentForm, [e.target.name]: e.target.value });
-  };
-
-  const handleTeacherSubmit = async () => {
+  const handleSubmit = async () => {
     // Validate form fields
     if (
-      !teacherForm.firstname ||
-      !teacherForm.lastname ||
-      !teacherForm.username ||
-      !teacherForm.password
+      !formData.firstname ||
+      !formData.lastname ||
+      !formData.username ||
+      !formData.password
     ) {
-      setTeacherError("Barcha maydonlar to'ldirilishi kerak!");
+      setError("Barcha maydonlar to'ldirilishi kerak!");
       return;
     }
 
     try {
       // Log the data being sent for debugging
-      console.log("Sending teacher data:", teacherForm);
+      console.log("Sending data:", formData);
 
-      const response = await axios.post(
-        "http://localhost:4000/admin/add-teacher",
-        teacherForm,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const endpoint =
+        formData.role === "teacher"
+          ? "http://localhost:4000/admin/add-teacher"
+          : "http://localhost:4000/admin/add-student";
+
+      const response = await axios.post(endpoint, formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+      });
 
       // Log the response for debugging
-      console.log("Teacher API response:", response);
+      console.log("API response:", response);
 
-      setTeacherSuccess(response.data.message);
-      setTeacherError("");
-      setTeacherForm({ firstname: "", lastname: "", username: "", password: "" });
+      setSuccess(response.data.message);
+      setError("");
+      setFormData({
+        firstname: "",
+        lastname: "",
+        username: "",
+        password: "",
+        role: "teacher",
+      });
     } catch (err) {
-      // Log the full error for debugging
-      console.error("Error adding teacher:", err);
-      const errorMessage =
-        err.response?.data?.error || "Failed to add teacher.";
-      setTeacherError(errorMessage);
-      setTeacherSuccess("");
-    }
-  };
-
-  const handleStudentSubmit = async () => {
-    if (
-      !studentForm.firstname ||
-      !studentForm.lastname ||
-      !studentForm.username ||
-      !studentForm.password
-    ) {
-      setStudentError("Barcha maydonlar to'ldirilishi kerak!");
-      return;
-    }
-
-    try {
-      const response = await axios.post(
-        "http://localhost:4000/admin/add-student",
-        studentForm,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      setStudentSuccess(response.data.message);
-      setStudentError("");
-      setStudentForm({ firstname: "", lastname: "", username: "", password: "" });
-    } catch (err) {
-      setStudentError(err.response?.data?.error || "Failed to add student.");
-      setStudentSuccess("");
+      console.error("Error:", err);
+      const errorMessage = err.response?.data?.error || "Failed to add user.";
+      setError(errorMessage);
+      setSuccess("");
     }
   };
 
@@ -108,108 +71,76 @@ const AdminPage = () => {
           Admin Panel
         </h1>
 
-        <div className="mb-12">
-          <h2 className="text-2xl font-semibold text-gray-700 mb-4">
-            Add Teacher
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-            <input
-              type="text"
-              name="firstname"
-              value={teacherForm.firstname}
-              onChange={handleTeacherChange}
-              placeholder="First Name"
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <input
-              type="text"
-              name="lastname"
-              value={teacherForm.lastname}
-              onChange={handleTeacherChange}
-              placeholder="Last Name"
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <input
-              type="text"
-              name="username"
-              value={teacherForm.username}
-              onChange={handleTeacherChange}
-              placeholder="Username"
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <input
-              type="password"
-              name="password"
-              value={teacherForm.password}
-              onChange={handleTeacherChange}
-              placeholder="Password"
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <button
-            onClick={handleTeacherSubmit}
-            className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition duration-300"
-          >
-            Add Teacher
-          </button>
-          {teacherError && (
-            <p className="text-red-500 text-sm mt-2">{teacherError}</p>
-          )}
-          {teacherSuccess && (
-            <p className="text-green-500 text-sm mt-2">{teacherSuccess}</p>
-          )}
-        </div>
-
         <div>
           <h2 className="text-2xl font-semibold text-gray-700 mb-4">
-            Add Student
+            Add User
           </h2>
+
+          {/* Role Selection */}
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-2">Select Role:</label>
+            <select
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="teacher">Teacher</option>
+              <option value="student">Student</option>
+            </select>
+          </div>
+
+          {/* Form Fields */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
             <input
               type="text"
               name="firstname"
-              value={studentForm.firstname}
-              onChange={handleStudentChange}
+              value={formData.firstname}
+              onChange={handleChange}
               placeholder="First Name"
               className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
               type="text"
               name="lastname"
-              value={studentForm.lastname}
-              onChange={handleStudentChange}
+              value={formData.lastname}
+              onChange={handleChange}
               placeholder="Last Name"
               className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
               type="text"
               name="username"
-              value={studentForm.username}
-              onChange={handleStudentChange}
+              value={formData.username}
+              onChange={handleChange}
               placeholder="Username"
               className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
               type="password"
               name="password"
-              value={studentForm.password}
-              onChange={handleStudentChange}
+              value={formData.password}
+              onChange={handleChange}
               placeholder="Password"
               className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
+
+          {/* Submit Button */}
           <button
-            onClick={handleStudentSubmit}
-            className="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition duration-300"
+            onClick={handleSubmit}
+            className={`w-full p-3 rounded-lg text-white transition duration-300 ${
+              formData.role === "teacher"
+                ? "bg-blue-600 hover:bg-blue-700"
+                : "bg-green-600 hover:bg-green-700"
+            }`}
           >
-            Add Student
+            Add {formData.role === "teacher" ? "Teacher" : "Student"}
           </button>
-          {studentError && (
-            <p className="text-red-500 text-sm mt-2">{studentError}</p>
-          )}
-          {studentSuccess && (
-            <p className="text-green-500 text-sm mt-2">{studentSuccess}</p>
-          )}
+
+          {/* Error and Success Messages */}
+          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+          {success && <p className="text-green-500 text-sm mt-2">{success}</p>}
         </div>
       </div>
     </div>
