@@ -15,3 +15,5 @@ exports.checkRole = (allowedRoles) => {
     } catch (error) {}
   };
 };
+
+['student'].includes('teacher')
