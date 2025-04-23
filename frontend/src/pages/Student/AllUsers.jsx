@@ -9,7 +9,7 @@ const StudentTable = () => {
     useEffect(() => {
         const fetchStudents = async () => {
             try {
-                const response = await fetch('http://localhost:4000/student/students');
+                const response = await fetch('http://localhost:4000/admin/users');
                 if (!response.ok) {
                     throw new Error('Ma\'lumotlarni yuklashda xato');
                 }
@@ -65,15 +65,17 @@ const StudentTable = () => {
                         <th className="border px-4 py-2">ID</th>
                         <th className="border px-4 py-2">Ism</th>
                         <th className="border px-4 py-2">Familiya</th>
+                        <th className="border px-4 py-2">Role</th>
                         <th className="border px-4 py-2">Amallar</th>
                     </tr>
                 </thead>
                 <tbody>
                     {students.map((student) => (
-                        <tr key={student.student_id}>
-                            <td className="border px-4 py-2">{student.student_id}</td>
+                        <tr key={student.id}>
+                            <td className="border px-4 py-2">{student.id}</td>
                             <td className="border px-4 py-2">{student.firstname}</td>
                             <td className="border px-4 py-2">{student.lastname}</td>
+                            <td className="border px-4 py-2">{student.role}</td>
                             <td className="border px-4 py-2">
                                 <button
                                     onClick={() => handleEdit(student)}
@@ -82,7 +84,7 @@ const StudentTable = () => {
                                     Tahrirlash
                                 </button>
                                 <button
-                                    onClick={() => handleDelete(student.student_id)}
+                                    onClick={() => handleDelete(student.user_id)}
                                     className="bg-red-500 text-white px-3 py-1 rounded"
                                 >
                                     O'chirish
