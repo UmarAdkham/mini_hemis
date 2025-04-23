@@ -13,6 +13,7 @@ function ViewAllCourses({ teacherId }) {
             try {
                 const response = await axios.get(`http://localhost:4000/teacher/${teacherId}/courses`);
                 setCourses(response.data.data);
+                console.log(response.data.data);
                 setMessage(response.data.message);
             } catch (error) {
                 if (error.response && error.response.status === 404) {
