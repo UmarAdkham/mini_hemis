@@ -111,7 +111,6 @@ function AddMaterials() {
   };
 
   const fetchMaterials = async () => {
-    setLoading(true);
     try {
       const response = await axios.get(
         `http://localhost:4000/teacher/get-all-materials`,
@@ -127,7 +126,6 @@ function AddMaterials() {
     } catch (error) {
       console.error(error);
     }
-    setLoading(false);
   };
 
   return (
