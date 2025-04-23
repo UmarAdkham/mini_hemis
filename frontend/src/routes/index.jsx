@@ -12,24 +12,25 @@ export const routes = [
     layout: AdminLayout,
     children: [
       { path: "", element: <Admin /> },
-      // { path: 'settings', element: <Settings /> }, // qo'shimcha sahifalar
+      // { path: 'settings', element: <Settings /> },
     ],
   },
   {
     path: "/teacher",
     layout: TeacherLayout,
-    children: [{ path: "", element: <Teacher /> }],
+    children: [
+      { path: "", element: <Teacher /> },
+      { path: "add-materials", element: <AddMaterials /> },
+    ],
   },
   {
     path: "/student",
     layout: StudentLayout,
-    children: [{ path: "", element: <Student /> }],
+    children: [
+      { path: "", element: <Student /> },
+      { path: "viewStudent", element: <ViewStudents /> },
+    ],
   },
-  {
-    path: "/add-materials",
-    layout: TeacherLayout,
-    children: [{ path: "", element: <AddMaterials /> }],
-  }
 ];
 
 export default routes;
