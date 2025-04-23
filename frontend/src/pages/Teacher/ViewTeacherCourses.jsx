@@ -9,7 +9,7 @@ function ViewAllCourses({ teacherId }) {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/teacher/5/courses`);
+        const response = await axios.get(`http://localhost:4000/teacher/${teacherId}/courses`);
         setCourses(response.data.data);
         console.log(response.data.data);
         setMessage(response.data.message);
