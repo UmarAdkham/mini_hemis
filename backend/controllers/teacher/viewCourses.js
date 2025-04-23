@@ -1,6 +1,6 @@
 const pool = require("../../config/db");
 
-exports.viewCourses = async (req, res) => {
+exports.getAllCourses = async (req, res) => {
   try {
     const teacherId = parseInt(req.params.teacherId)
     const result = await pool.query("SELECT * FROM courses where teacher_id = $1", [teacherId]);
@@ -18,3 +18,15 @@ exports.viewCourses = async (req, res) => {
     res.status(500).send({ message: "Kurslarni olishda xatolik yuz berdi" });
   }
 };
+
+
+exports.allCourse = async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT * FROM courses`)
+    res.status(200).json(result.rows)
+  } catch (error) {
+    res.json(error)
+  }
+
+}

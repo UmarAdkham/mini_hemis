@@ -6,14 +6,14 @@ exports.viewCourseStudents = async (req, res) => {
         c.id AS course_id,
         c.name AS course_name,
         u.id AS student_id,
-        u.firsname,
+        u.firstname,
         u.lastname,
         u.username
       FROM courses c
-      INNER JOIN enrolment e ON c.id = e.course_id
+      INNER JOIN enrollment e ON c.id = e.course_id
       INNER JOIN users u ON e.student_id = u.id
       WHERE u.role = 'student'
-      ORDER BY c.id, u.firsname
+      ORDER BY c.id, u.firstname
     `;
 
     const result = await pool.query(query);
