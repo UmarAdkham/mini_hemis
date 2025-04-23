@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 
 function ViewAllCourses() {
-    const { teacherId } = useParams(); 
+    const  {id}  = JSON.parse(localStorage.getItem('user')); 
+    const token = localStorage.getItem('token')
+    
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState('');
@@ -11,23 +12,30 @@ function ViewAllCourses() {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const response = await axios.get(`http://localhost:4000/teacher/${teacherId}/courses`);
+                const response = await axios.get(`http://localhost:4000/teacher/${id}/courses`, {
+                    headers: {
+                      "Content-Type": "multipart/form-data",
+                      Authorization: `Bearer ${token}`,
+                    },
+                  });
                 setCourses(response.data.data);
-                console.log(response.data.data);
+                console.log(response);
                 setMessage(response.data.message);
             } catch (error) {
-                if (error.response && error.response.status === 404) {
-                    setMessage('Kurslar topilmadi');
-                } else {
-                    setMessage('Kurslarni olishda xatolik yuz berdi');
-                }
+                console.log(error);
+                
+                // if (error.response && error.response.status === 404) {
+                //     setMessage('Kurslar topilmadi');
+                // } else {
+                //     setMessage('Kurslarni olishda xatolik yuz berdi');
+                // }
             } finally {
                 setLoading(false);
             }
         };
 
         fetchCourses();
-    }, [teacherId]);
+    }, []);
 
     if (loading) {
         return <div className="text-center text-xl font-semibold py-6 animate-pulse text-blue-500">Yuklanmoqda...</div>;
