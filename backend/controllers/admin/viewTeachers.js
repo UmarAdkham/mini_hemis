@@ -1,9 +1,7 @@
 const pool = require('../../config/db');
 require('dotenv').config();
 
-
-
-const getAllTeachers = async (req, res) => {
+const getAllTeachers = async (req, res) => {  
   try {
     const query = `
       SELECT id, firstname, lastname, username, role

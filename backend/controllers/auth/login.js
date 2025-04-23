@@ -7,7 +7,7 @@ exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
     const result = await pool.query(
-      "SELECT id, firstname, lastname, username, password FROM users WHERE username = $1",
+      "SELECT * FROM users WHERE username = $1",
       [username]
     );
     if (result.rows.length === 0) {
@@ -26,6 +26,7 @@ exports.login = async (req, res) => {
       process.env.SECRET_KEY,
       { expiresIn: "1h" }
     );
+
     res.status(200).json({
       message: "Login successful",
       token,

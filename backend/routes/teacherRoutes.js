@@ -19,7 +19,11 @@ const { getAllCourses } = require("../controllers/teacher/viewCourses");
 const { deleteStudent } = require("../controllers/teacher/deleteStudent");
 const { viewCourseStudents } = require("../controllers/student/viewCourses");
 const uploadMiddleware = require("../middlewares/uploadFile");
+const { checkRole } = require("../middlewares/checkRole");
 // ...
+
+
+teacherRouter.use(checkRole(['teacher']))
 
 // material routes
 teacherRouter.post("/add-materials", uploadMiddleware, addMaterials);
