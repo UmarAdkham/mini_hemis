@@ -5,7 +5,7 @@ const ViewStudents = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/students') // Endpoint manzilingiz
+    fetch('http://localhost:4000/student/students') // Endpoint manzilingiz
       .then(res => res.json())
       .then(data => {
         setStudents(data.students); // backendda `students: result.rows` bor

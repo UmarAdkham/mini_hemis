@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+body {
+    @apply bg-green-200 text-gray-900 text-center; 
+}

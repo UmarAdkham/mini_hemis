@@ -15,4 +15,3 @@ exports.checkRole = (allowedRoles) => {
     } catch (error) {}
   };
 };
-
