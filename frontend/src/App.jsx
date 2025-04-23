@@ -1,10 +1,32 @@
-import React from 'react'
-import './App.css'
-
+/* eslint-disable no-unused-vars */
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import routes from "./routes";
+import NotFound from "./pages/notFound";
+import Login from "./pages/login";
 function App() {
   return (
-    <div>App</div>
-  )
+    <Routes>
+      {/* Public Route */}
+      <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="/login" element={<Login />} />
+      {/* Private Routes */}
+      {routes.map(({ path, layout: Layout, children }) => (
+        <Route key={path} path={path} element={<Layout />}>
+          {children.map(({ path: childPath, element }, idx) => (
+            <Route
+              key={idx}
+              index={childPath === ""}
+              path={childPath}
+              element={element}
+            />
+          ))}
+        </Route>
+      ))}
+      {/* Not found */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;

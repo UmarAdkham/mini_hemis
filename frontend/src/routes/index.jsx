@@ -1,0 +1,35 @@
+import React from "react";
+import AdminLayout from "../layouts/AdminLayout";
+import TeacherLayout from "../layouts/TeacherLayout";
+import StudentLayout from "../layouts/StudentLayout";
+import Admin from "../pages/Admin";
+import Teacher from "../pages/Teacher";
+import Student from "../pages/Student";
+import AddMaterials from "../pages/Teacher/AddMaterials";
+export const routes = [
+  {
+    path: "/admin",
+    layout: AdminLayout,
+    children: [
+      { path: "", element: <Admin /> },
+      // { path: 'settings', element: <Settings /> }, // qo'shimcha sahifalar
+    ],
+  },
+  {
+    path: "/teacher",
+    layout: TeacherLayout,
+    children: [{ path: "", element: <Teacher /> }],
+  },
+  {
+    path: "/student",
+    layout: StudentLayout,
+    children: [{ path: "", element: <Student /> }],
+  },
+  {
+    path: "/add-materials",
+    layout: TeacherLayout,
+    children: [{ path: "", element: <AddMaterials /> }],
+  }
+];
+
+export default routes;

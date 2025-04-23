@@ -1,8 +1,39 @@
-const express = require('express');
-const createTeacher = require('../controllers/admin/createTeacher');
+const express = require("express");
+const teacherRouter = express.Router();
 
-const router = express.Router();
+// import materials controllers
+const {
+  addMaterials,
+  getAllMaterials,
+  getMaterialById,
+} = require("../controllers/teacher/addMaterial");
 
-router.post('/', createTeacher);
+// import student work controllers
+const { gradeWork } = require("../controllers/teacher/gradeStudent");
 
-module.exports = router;
+// import student controllers
+// ...
+
+// import courses controllers
+const { getAllCourses } = require("../controllers/teacher/viewCourses");
+const { deleteStudent } = require("../controllers/teacher/deleteStudent");
+const { viewCourseStudents } = require("../controllers/student/viewCourses");
+const uploadMiddleware = require("../middlewares/uploadFile");
+// ...
+
+// material routes
+teacherRouter.post("/add-materials", uploadMiddleware, addMaterials);
+teacherRouter.get("/get-all-materials", getAllMaterials);
+teacherRouter.get("/get-material-detail/:course_id", getMaterialById);
+
+// grade student work routes
+teacherRouter.put("/:id/grade", gradeWork);
+
+// student routes
+teacherRouter.delete("/delete-student/:id", deleteStudent);
+
+// courses routes
+teacherRouter.get("/:teacherId/courses", getAllCourses);
+teacherRouter.get("/course-students", viewCourseStudents);
+
+module.exports = teacherRouter;
