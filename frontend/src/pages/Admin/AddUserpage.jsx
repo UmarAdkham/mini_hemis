@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // For redirecting if token is missing
 
 const AdminPage = () => {
   const [formData, setFormData] = useState({
@@ -7,17 +8,32 @@ const AdminPage = () => {
     lastname: "",
     username: "",
     password: "",
-    role: "teacher", // Default to teacher
+    role: "teacher",
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [token, setToken] = useState(localStorage.getItem("token")); // Store token in state
+  const navigate = useNavigate(); // For redirecting
+
+  // Check for token on component mount
+  useEffect(() => {
+    if (!token) {
+      setError("Please log in to access this page.");
+      // Redirect to login page (adjust the path based on your app)
+      navigate("/login");
+    }
+  }, [token, navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async () => {
-    // Validate form fields
+    if (!token) {
+      setError("No token found. Please log in.");
+      return;
+    }
+
     if (
       !formData.firstname ||
       !formData.lastname ||
@@ -29,7 +45,7 @@ const AdminPage = () => {
     }
 
     try {
-      // Log the data being sent for debugging
+      console.log("Token being used:", token); // Log the token
       console.log("Sending data:", formData);
 
       const endpoint =
@@ -39,14 +55,12 @@ const AdminPage = () => {
 
       const response = await axios.post(endpoint, formData, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
 
-      // Log the response for debugging
       console.log("API response:", response);
-
       setSuccess(response.data.message);
       setError("");
       setFormData({
@@ -76,7 +90,6 @@ const AdminPage = () => {
             Add User
           </h2>
 
-          {/* Role Selection */}
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Select Role:</label>
             <select
@@ -90,7 +103,6 @@ const AdminPage = () => {
             </select>
           </div>
 
-          {/* Form Fields */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
             <input
               type="text"
@@ -126,7 +138,6 @@ const AdminPage = () => {
             />
           </div>
 
-          {/* Submit Button */}
           <button
             onClick={handleSubmit}
             className={`w-full p-3 rounded-lg text-white transition duration-300 ${
@@ -138,7 +149,6 @@ const AdminPage = () => {
             Add {formData.role === "teacher" ? "Teacher" : "Student"}
           </button>
 
-          {/* Error and Success Messages */}
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
           {success && <p className="text-green-500 text-sm mt-2">{success}</p>}
         </div>
