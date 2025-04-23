@@ -1,15 +1,12 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
+import Sidebar from "../components/sidebar/Sidebar";
 
 function TeacherLayout() {
   return (
-    <div className="flex">
-      <aside className="w-64 bg-green-800 text-white p-4">
-        <h2 className="text-lg font-bold mb-4">Teacher Panel</h2>
-        <Link to="/teacher">Dashboard</Link>
-        <Link to="/teacher/add-materials" className="block mt-2">Add materials</Link>
-      </aside>
-      <main className="flex-1 p-4">
+    <div className="flex justify-center">
+      <Sidebar paths={['add-materials']}/>
+      <main className="flex-1 sm:ml-64">
         <Outlet />
       </main>
     </div>
