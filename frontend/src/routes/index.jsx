@@ -18,21 +18,19 @@ export const routes = [
   {
     path: "/teacher",
     layout: TeacherLayout,
-    children: [{ path: "", element: <Teacher /> }],
+    children: [
+      { path: "", element: <Teacher /> },
+      { path: "add-materials", element: <AddMaterials /> },
+    ],
   },
   {
     path: "/student",
     layout: StudentLayout,
     children: [
       { path: "", element: <Student /> },
-      { path: "viewStudent", element: <ViewStudents /> }
+      { path: "viewStudent", element: <ViewStudents /> },
     ],
-  },  
-  {
-    path: "/add-materials",
-    layout: TeacherLayout,
-    children: [{ path: "", element: <AddMaterials /> }],
-  }
+  },
 ];
 
 export default routes;
