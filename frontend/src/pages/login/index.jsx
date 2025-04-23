@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+
 const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -28,18 +30,15 @@ const Login = () => {
 
       const data = response.data;
       console.log(data);
-      
 
-      // localStorage.setItem("token", data.token);
-      // localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
-      // if (data.user.role === "admin") {
-      //   navigate("/admin");
-      // } else if (data.user.role === "student") {
-      //   navigate("/student");
-      // } else if (data.user.role === "teacher") {
-      //   navigate("/teacher");
-      // } 
+      const decoded = jwtDecode(data.token);
+      const role = decoded.role;
+
+      // Navigate to corresponding route
+      navigate(`/${role}`);
     } catch (error) {
       console.error("Login error:", error);
       if (error.response) {
