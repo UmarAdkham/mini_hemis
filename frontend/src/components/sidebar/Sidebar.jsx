@@ -1,7 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
-function Sidebar({paths}) {
+function Sidebar({ paths }) {
   return (
     <div className="sidebar">
       <button
@@ -46,23 +46,35 @@ function Sidebar({paths}) {
             </span>
           </a>
           <ul className="space-y-2 font-medium">
-            <li >
-                <Link
-                  to={`/teacher`}
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                >
-                  <span className="ms-3">Teacher</span>
-                </Link>
-              </li>
+            {/* <li>
+              <Link
+                to={`/teacher`}
+                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
+                <span className="ms-3">Teacher</span>
+              </Link>
+            </li> */}
             {paths.map((path) => (
               <li key={path}>
-                <Link
-                  to={`/teacher/${path}`}
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                <NavLink
+                  to={`/${path}`}
+                  className={({ isActive }) =>
+                    `flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group ${
+                      isActive ? "bg-gray-100 dark:bg-gray-700" : ""
+                    }`
+                  }
+                  end
                 >
-                  <span className="ms-3">{(path.charAt(0).toUpperCase() + path.slice(1)).replace('-',' ')}</span>
-
-                </Link>
+                  <span className="ms-3">
+                    {path
+                      .replace(/[-/]/g, " ")
+                      .split(" ")
+                      .map(
+                        (word) => word.charAt(0).toUpperCase() + word.slice(1)
+                      )
+                      .join(" ")}
+                  </span>
+                </NavLink>
               </li>
             ))}
           </ul>
