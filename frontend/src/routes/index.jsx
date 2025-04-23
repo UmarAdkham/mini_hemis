@@ -23,8 +23,11 @@ export const routes = [
   {
     path: "/student",
     layout: StudentLayout,
-    children: [{ path: "", element: <Student /> }],
-  },
+    children: [
+      { path: "", element: <Student /> },
+      { path: "viewStudent", element: <ViewStudents /> }
+    ],
+  },  
   {
     path: "/add-materials",
     layout: TeacherLayout,
