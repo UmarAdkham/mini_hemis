@@ -12,7 +12,7 @@ export const routes = [
     layout: AdminLayout,
     children: [
       { path: "", element: <Admin /> },
-      // { path: 'settings', element: <Settings /> }, // qo'shimcha sahifalar
+      // { path: 'settings', element: <Settings /> },
     ],
   },
   {
