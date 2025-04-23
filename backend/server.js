@@ -8,6 +8,7 @@ const studentRouter = require("./routes/studentRoutes");
 const teacherRoutes = require("./routes/teacherRoutes");
 const adminRoute = require("./routes/adminRoutes");
 const authRoutes = require("./routes/authRoutes");
+const { authentication } = require("./middlewares/authentication");
 
 app.use(cors());
 app.use(express.json());

@@ -9,8 +9,11 @@ const viewStudents = require("../controllers/admin/viewStudents");
 const {
   filterAllStudentsByGrade,
 } = require("../controllers/admin/filterAllStudentsByGrade");
+const { checkRole } = require("../middlewares/checkRole");
 
 const adminRoute = express.Router();
+
+adminRoute.use(checkRole(["admin"]));
 
 adminRoute.get("/teachers", getAllTeachers);
 adminRoute.get("/students", viewStudents);
