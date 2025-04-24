@@ -15,15 +15,13 @@ import ViewStudents from "../pages/Student/viewstudent";
 import AdminPage from "../pages/Admin/AddUserpage";
 import ViewAllTeachers from "../pages/Admin/ViewAllTeacher";
 
-
 export const routes = [
   {
     path: "/admin",
     layout: AdminLayout,
     children: [
       { path: "", element: <Admin /> },
-      // { path: 'settings', element: <Settings /> }, // qo'shimcha sahifalar
-      {path: "all-users", element: <StudentTable />},
+      { path: "all-users", element: <StudentTable /> },
       { path: 'add-user', element: <AdminPage /> },
       { path: 'view-all-teachers', element: <ViewAllTeachers /> }
     ],
