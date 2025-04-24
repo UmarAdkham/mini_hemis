@@ -33,7 +33,7 @@ export const routes = [
       { path: "add-materials", element: <AddMaterials /> },
       { path: ":teacherId/courses", element: <ViewAllCourses /> },
       { path: "view-teacher-courses", element: <ViewAllCourses /> },
-      { path: "add-task", element: <AddTask /> },
+      { path: "add-task/:id", element: <AddTask /> },
       { path: "single-course/:id", element: <SingleCourse />}
     ],
   },

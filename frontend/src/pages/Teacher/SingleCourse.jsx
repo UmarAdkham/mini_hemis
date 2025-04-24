@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 function SingleCourse() {
     const { id } = useParams()
@@ -9,6 +9,7 @@ function SingleCourse() {
     // const [course, setCourse] = useState({})
     const [students, setStudents] = useState([])
     const [loading, setLoading] = useState(true)
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -43,7 +44,7 @@ function SingleCourse() {
                 <h2 className="text-2xl font-semibold text-gray-800">Enrolled Students:</h2>
                 <div className="flex space-x-3">
                     <button
-                        onClick={() => { }}
+                        onClick={() => navigate(`/teacher/add-task/${id}`)}
                         className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-all"
                     >
                         Add Task
