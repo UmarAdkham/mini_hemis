@@ -49,7 +49,7 @@ function ViewAllCourses() {
             {courses.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {courses.map((course) => (
-                        <Link key={course.id} to={''}>
+                        <Link key={course.id} to={`/teacher/single-course/${course.id}`}>
                             <div
                                 className="bg-gradient-to-r from-white to-blue-50 border border-blue-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out">
                                 <h3 className="text-2xl font-bold text-gray-800 mb-3">{course.name}</h3>
