@@ -13,7 +13,7 @@ import ViewAllCourses from "../pages/Teacher/ViewTeacherCourses"
 import ViewStudents from "../pages/Student/viewstudent";
 
 import AdminPage from "../pages/Admin/AddUserpage";
-import StudentTable from "../pages/Admin/AllUsers";
+import ViewAllTeachers from "../pages/Admin/ViewAllTeacher";
 
 
 export const routes = [
@@ -25,6 +25,7 @@ export const routes = [
       // { path: 'settings', element: <Settings /> }, // qo'shimcha sahifalar
       {path: "all-users", element: <StudentTable />},
       { path: 'add-user', element: <AdminPage /> },
+      { path: 'view-all-teachers', element: <ViewAllTeachers /> }
     ],
   },
   {
@@ -35,8 +36,9 @@ export const routes = [
     children: [
       { path: "", element: <Teacher /> },
       { path: "add-materials", element: <AddMaterials /> },
-      { path: "view-teacher-courses", element: <ViewAllCourses/>},
-      { path: "add-task", element: <AddTask/>}
+      { path: ":teacherId/courses", element: <ViewAllCourses /> },
+      { path: "view-teacher-courses", element: <ViewAllCourses /> },
+      { path: "add-task", element: <AddTask /> }
     ],
   },
   {
