@@ -30,7 +30,7 @@ export const routes = [
     layout: TeacherLayout,
     children: [
       { path: "", element: <Teacher /> },
-      { path: "add-materials", element: <AddMaterials /> },
+      { path: "add-materials/:course_id", element: <AddMaterials /> },
       { path: ":teacherId/courses", element: <ViewAllCourses /> },
       { path: "view-teacher-courses", element: <ViewAllCourses /> },
       { path: "add-task", element: <AddTask /> },
