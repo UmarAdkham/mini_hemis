@@ -13,7 +13,8 @@ import AdminPage from "../pages/Admin/AddUserpage";
 import ViewAllTeachers from "../pages/Admin/ViewAllTeacher";
 import SingleCourse from "../pages/Teacher/SingleCourse";
 import StudentTable from "../pages/Admin/AllUsers";
-
+import StudentCoursePage from "../pages/Student/StudentCoursePage";
+ 
 export const routes = [
   {
     path: "/admin",
@@ -43,6 +44,8 @@ export const routes = [
     children: [
       { path: "", element: <Student /> },
       { path: "viewStudent", element: <ViewStudents /> },
+      { path: "view-all-course", element: <StudentCoursePage /> }
+
     ],
   },
 ];
