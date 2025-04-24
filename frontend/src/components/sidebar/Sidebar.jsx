@@ -42,7 +42,7 @@ function Sidebar({ paths, panelName }) {
               alt="Flowbite Logo"
             />
             <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-              {panelName} panel
+              Teacher panel
             </span>
           </a>
           <ul className="space-y-2 font-medium">

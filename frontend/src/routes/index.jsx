@@ -18,7 +18,7 @@ export const routes = [
     layout: AdminLayout,
     children: [
       { path: "", element: <Admin /> },
-      { path: "all-users", element: <StudentTable /> },
+    
       { path: 'add-user', element: <AdminPage /> },
       { path: 'view-all-teachers', element: <ViewAllTeachers /> }
     ],

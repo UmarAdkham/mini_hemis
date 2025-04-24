@@ -5,7 +5,7 @@ import Sidebar from "../components/sidebar/Sidebar";
 function AdminLayout() {
   return (
     <div className="flex">
-      <Sidebar paths={['admin']} panelName={'Admin'}/> 
+      <Sidebar paths={['admin','admin/add-user','admin/view-all-teachers']}/>
       <main className="flex-1 sm:ml-64">
         <Outlet />
       </main>
