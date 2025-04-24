@@ -30,15 +30,13 @@ exports.editProfile = async (req, res) => {
         id: user_id,
         firstname: newFirstname,
         lastname: newLastname,
-        username: newUsername
+        username: newUsername,
+        password: newPassword
       }
     });
 
   } catch (err) {
     console.error(err.message);
-    if (err.code === '23505') {
-      return res.status(400).json({ message: 'Ushbu username allaqachon mavjud' });
-    }
     res.status(500).json({ message: 'Server xatosi' });
   }
 };
