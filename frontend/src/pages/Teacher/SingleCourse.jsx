@@ -40,7 +40,7 @@ function SingleCourse() {
             {/* <h1 className="text-3xl font-bold mb-6 text-indigo-700">{course?.name}</h1> */}
 
             <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl font-semibold text-gray-800">A'zo Studentlar</h2>
+                <h2 className="text-2xl font-semibold text-gray-800">Enrolled Students:</h2>
                 <div className="flex space-x-3">
                     <button
                         onClick={() => { }}
@@ -52,7 +52,7 @@ function SingleCourse() {
                         onClick={() => { }}
                         className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-all"
                     >
-                        Yangilash
+                        Add Material
                     </button>
                 </div>
             </div>
