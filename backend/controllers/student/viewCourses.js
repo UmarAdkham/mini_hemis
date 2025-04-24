@@ -1,6 +1,6 @@
 const pool = require("../../config/db");
 exports.viewCourseStudents = async (req, res) => {
-  const { student_id } = req.params;
+  const { id } = req.params;
   try {
     const query = `
       SELECT 
@@ -17,7 +17,7 @@ exports.viewCourseStudents = async (req, res) => {
       ORDER BY c.id, u.firstname
     `;
 
-    const values = [student_id];
+    const values = [id];
 
     const result = await pool.query(query, values);
 

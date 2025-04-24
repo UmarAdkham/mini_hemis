@@ -14,6 +14,7 @@ import ViewAllTeachers from "../pages/Admin/ViewAllTeacher";
 import SingleCourse from "../pages/Teacher/SingleCourse";
 import StudentTable from "../pages/Admin/AllUsers";
 import StudentCoursePage from "../pages/Student/StudentCoursePage";
+import MyCourse from "../pages/Student/MyCourse";
  
 export const routes = [
   {
@@ -44,7 +45,10 @@ export const routes = [
     children: [
       { path: "", element: <Student /> },
       { path: "viewStudent", element: <ViewStudents /> },
-      { path: "view-all-course", element: <StudentCoursePage /> }
+      { path: "view-all-course", element: <StudentCoursePage /> },
+      { path: "my-course", element: <MyCourse /> }
+
+
 
     ],
   },
