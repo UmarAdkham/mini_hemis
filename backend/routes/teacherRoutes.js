@@ -15,7 +15,7 @@ const { gradeWork } = require("../controllers/teacher/gradeStudent");
 // ...
 
 // import courses controllers
-const { getAllCourses, addTask } = require("../controllers/teacher/viewCourses");
+const { getAllCourses, addTask, getAllTasks } = require("../controllers/teacher/viewCourses");
 const { deleteStudent } = require("../controllers/teacher/deleteStudent");
 const { viewCourseStudents } = require("../controllers/student/viewCourses");
 const uploadMiddleware = require("../middlewares/uploadFile");
@@ -41,6 +41,7 @@ teacherRouter.delete("/delete-student/:id", deleteStudent);
 // courses routes
 teacherRouter.get("/:teacherId/courses", getAllCourses);
 teacherRouter.post("/add-task", addTask)
+teacherRouter.get('/get-tasks',getAllTasks)
 teacherRouter.get("/course-students", viewCourseStudents);
 
 module.exports = teacherRouter;
