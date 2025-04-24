@@ -35,6 +35,7 @@ export const routes = [
     children: [
       { path: "", element: <Teacher /> },
       { path: "add-materials", element: <AddMaterials /> },
+      { path: "view-teacher-courses", element: <ViewAllCourses/>},
       { path: "add-task", element: <AddTask/>}
     ],
   },

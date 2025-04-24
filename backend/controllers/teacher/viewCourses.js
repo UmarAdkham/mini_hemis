@@ -19,8 +19,6 @@ exports.getAllCourses = async (req, res) => {
   }
 };
 
-const pool = require("../../config/db");
-
 exports.addTask = async (req, res) => {
   try {
     const { title, description, course_id } = req.body;
@@ -31,14 +29,14 @@ exports.addTask = async (req, res) => {
     }
 
     // Berilgan course_id bo'yicha kurs mavjudligini tekshiramiz
-    const courseCheck = await pool.query("SELECT * FROM course WHERE id = $1", [course_id]);
+    const courseCheck = await pool.query("SELECT * FROM courses WHERE id = $1", [course_id]);
     if (courseCheck.rows.length === 0) {
       return res.status(404).send({ message: "Bunday kurs mavjud emas" });
     }
 
     // Task qo'shamiz
     const result = await pool.query(
-      "INSERT INTO task (title, description, course_id) VALUES ($1, $2, $3) RETURNING *",
+      "INSERT INTO tasks (title, description, course_id) VALUES ($1, $2, $3) RETURNING *",
       [title, description, course_id]
     );
 

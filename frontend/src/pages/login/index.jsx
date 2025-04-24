@@ -52,6 +52,7 @@ const Login = () => {
   };
 
   return (
+    <div className="p-[100px]">
     <div className="max-w-xs bg-white rounded-3xl p-6 border-4 border-white shadow-lg mx-auto">
       <h2 className="text-center font-extrabold text-2xl text-blue-500">
         Sign In
@@ -94,6 +95,7 @@ const Login = () => {
           Sign In
         </button>
       </form>
+    </div>
     </div>
   );
 };
