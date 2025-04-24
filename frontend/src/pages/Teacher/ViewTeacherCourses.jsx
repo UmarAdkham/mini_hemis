@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function ViewAllCourses() {
-    const  {id}  = JSON.parse(localStorage.getItem('user')); 
+    const { id } = JSON.parse(localStorage.getItem('user'));
     const token = localStorage.getItem('token')
-    
+
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState('');
@@ -14,10 +15,10 @@ function ViewAllCourses() {
             try {
                 const response = await axios.get(`http://localhost:4000/teacher/${id}/courses`, {
                     headers: {
-                      "Content-Type": "multipart/form-data",
-                      Authorization: `Bearer ${token}`,
+                        "Content-Type": "multipart/form-data",
+                        Authorization: `Bearer ${token}`,
                     },
-                  });
+                });
                 setCourses(response.data.data);
                 console.log(response);
                 setMessage(response.data.message);
@@ -48,18 +49,12 @@ function ViewAllCourses() {
             {courses.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {courses.map((course) => (
-                        <div
-                            key={course.id}
-                            className="bg-gradient-to-r from-white to-blue-50 border border-blue-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out"
-                        >
-                            <h3 className="text-2xl font-bold text-gray-800 mb-3">{course.name}</h3>
-                            {/* <span className="inline-block bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full mb-4">
-                                Teacher ID: {course.description}
-                            </span> */}
-                            {/* <p className="text-gray-700 leading-relaxed">
-                                {course.description || "Bu kurs haqida batafsil ma'lumot yo'q."}
-                            </p> */}
-                        </div>
+                        <Link key={course.id} to={`/teacher/single-course/${course.id}`}>
+                            <div
+                                className="bg-gradient-to-r from-white to-blue-50 border border-blue-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out">
+                                <h3 className="text-2xl font-bold text-gray-800 mb-3">{course.name}</h3>
+                            </div>
+                        </Link>
                     ))}
                 </div>
             ) : (

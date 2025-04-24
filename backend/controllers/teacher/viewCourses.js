@@ -2,8 +2,7 @@ const pool = require("../../config/db");
 
 exports.getAllCourses = async (req, res) => {
   try {
-    const teacherId = parseInt(req.params.teacherId)
-    const result = await pool.query("SELECT * FROM courses where teacher_id = $1", [teacherId]);
+    const result = await pool.query("SELECT * FROM courses");
 
     if (result.rows.length === 0) {
       return res.status(404).send({ message: "Kurslar topilmadi" });
@@ -49,16 +48,3 @@ exports.addTask = async (req, res) => {
     res.status(500).send({ message: "Topshiriq qo'shishda xatolik yuz berdi" });
   }
 };
-
-
-
-exports.allCourse = async (req, res) => {
-  try {
-    const result = await pool.query(`
-      SELECT * FROM courses`)
-    res.status(200).json(result.rows)
-  } catch (error) {
-    res.json(error)
-  }
-
-}
