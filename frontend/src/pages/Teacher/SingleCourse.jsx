@@ -10,7 +10,6 @@ function SingleCourse() {
     // const [course, setCourse] = useState({})
     const [students, setStudents] = useState([])
     const [loading, setLoading] = useState(true)
-    const navigate = useNavigate();
 
 
 
