@@ -4,12 +4,14 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 function SingleCourse() {
     const { id } = useParams()
+    const navigate = useNavigate()
     const token = localStorage.getItem('token')
-
+    
     // const [course, setCourse] = useState({})
     const [students, setStudents] = useState([])
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate();
+
 
 
     useEffect(() => {
@@ -50,7 +52,7 @@ function SingleCourse() {
                         Add Task
                     </button>
                     <button
-                        onClick={() => { }}
+                        onClick={() => (navigate(`/teacher/add-materials/${id}`))}
                         className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-all"
                     >
                         Add Material

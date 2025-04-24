@@ -1,5 +1,7 @@
 
-import React, { useEffect } from "react";
+import React from "react";
+
+import {useNavigate, useParams} from 'react-router-dom'
 import { useState } from "react";
 import axios from "axios";
 import {
@@ -22,6 +24,9 @@ function AddMaterials() {
   const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
   const [materials, setMaterials] = useState([]);
+  const {course_id} = useParams()
+  const navigate = useNavigate()
+  
   const token =
     localStorage.getItem("token");
 
@@ -36,7 +41,7 @@ function AddMaterials() {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("file", file);
-    formData.append("course_id", 2);
+    formData.append("course_id", course_id);
 
     const addMaterial = async () => {
       try {
@@ -274,6 +279,13 @@ function AddMaterials() {
               className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors w-full md:w-auto"
             >
               Material Qo'shish
+            </button>
+            <button
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors w-full md:w-auto ms-4"
+              onClick={() => (navigate(`/teacher/single-course/${course_id}`))}
+            >
+              Kursga qaytish
             </button>
           </form>
         </div>
