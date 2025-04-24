@@ -1,7 +1,12 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function Sidebar({ paths, panelName }) {
+  const navigate = useNavigate();
+  const logout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
   return (
     <div className="sidebar">
       <button
@@ -86,6 +91,14 @@ function Sidebar({ paths, panelName }) {
               </li>
             ))}
           </ul>
+          <button
+            to="/login"
+            className="fixed bottom-4 left-15 w-35 items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            onClick={logout} // Assuming you have a logout function defined
+            type="button"
+          >
+            Log out
+          </button>
         </div>
       </aside>
     </div>
