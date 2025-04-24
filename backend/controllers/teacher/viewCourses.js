@@ -18,6 +18,25 @@ exports.getAllCourses = async (req, res) => {
   }
 };
 
+exports.getAllTasks = async (req, res) => {
+  try {
+    const result = await pool.query("SELECT * FROM tasks");
+
+    if (result.rows.length === 0) {
+      return res.status(404).send({ message: "Topshiriqlar topilmadi" });
+    }
+
+    res.status(200).json({
+      message: "Topshiriqlar muvaffaqiyatli olindi",
+      data: result.rows,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Topshiriqlarni olishda xatolik yuz berdi" });
+  }
+};
+
+
 exports.addTask = async (req, res) => {
   try {
     const { title, description, course_id } = req.body;
