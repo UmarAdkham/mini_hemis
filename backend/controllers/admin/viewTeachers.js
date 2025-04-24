@@ -1,12 +1,7 @@
-const { Pool } = require('pg');
+const pool = require('../../config/db');
 require('dotenv').config();
 
-const pool = new Pool({
-  connectionString: process.env.DB_URL,
-  ssl: { rejectUnauthorized: false },
-});
-
-const getAllTeachers = async (req, res) => {
+const getAllTeachers = async (req, res) => {  
   try {
     const query = `
       SELECT id, firstname, lastname, username, role

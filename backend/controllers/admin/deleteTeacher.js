@@ -1,18 +1,32 @@
-const express = require("express");
-const app = express();
-// teacherlarni o'chirish
-app.delete('/teacher/:id', async (req, res) => {
-    const userId = req.params.id;
-    try {
-        const result = await db.query('DELETE FROM users WHERE id = $1 AND role = $2 RETURNING *', [userId, 'teacher']);
-        if (result.rowCount === 0) {
-            return res.status(404).json({ message: 'Teacher topilmadi yoki bu user teacher emas' });
-        }
-        res.json({ message: 'Teacher o‘chirildi', deletedTeacher: result.rows[0] });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Server xatosi' });
-    }
-});
+const pool = require('../../config/db');
 
-module.exports = app;
+const removeStudentFromCourse = async (req, res) => {
+  const teacherId = req.user.id;
+  const { studentId, courseId } = req.body;
+
+  try {
+    const result = await pool.query(
+      
+      `SELECT 1
+      FROM courses
+      WHERE id = $1 AND teacher_id = $2`
+      ,
+      [courseId, teacherId]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(403).json({ message: 'Access denied or course not found' });
+    }
+
+    await pool.query(
+      `DELETE FROM enrollment WHERE student_id = $1 AND course_id = $2`,
+      [studentId, courseId]
+    );
+
+    res.status(200).json({ message: 'Student removed from course' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
+
+module.exports = { removeStudentFromCourse };
