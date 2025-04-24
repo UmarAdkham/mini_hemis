@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 
 function ViewAllCourses() {
-    const { teacherId } = useParams(); 
+    const  {id}  = JSON.parse(localStorage.getItem('user')); 
+    const token = localStorage.getItem('token')
+    
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState('');
@@ -11,11 +12,17 @@ function ViewAllCourses() {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const response = await axios.get(`http://localhost:4000/teacher/${teacherId}/courses`);
+                const response = await axios.get(`http://localhost:4000/teacher/${id}/courses`, {
+                    headers: {
+                      "Content-Type": "multipart/form-data",
+                      Authorization: `Bearer ${token}`,
+                    },
+                  });
                 setCourses(response.data.data);
-                console.log(response.data.data);
+                console.log(response);
                 setMessage(response.data.message);
             } catch (error) {
+                console.log(error);
                 if (error.response && error.response.status === 404) {
                     setMessage('Kurslar topilmadi');
                 } else {
@@ -27,16 +34,16 @@ function ViewAllCourses() {
         };
 
         fetchCourses();
-    }, [teacherId]);
+    }, []);
 
     if (loading) {
         return <div className="text-center text-xl font-semibold py-6 animate-pulse text-blue-500">Yuklanmoqda...</div>;
     }
 
     return (
-        <div className="max-w-6xl mx-auto px-4 py-10">
+        <div className="text-center  max-w-6xl mx-auto px-4 py-10">
             <h2 className="text-3xl font-bold mb-6 text-center text-indigo-700">O'qituvchining Kurslari</h2>
-            <p className="text-center text-gray-600 mb-8 italic">{message}</p>
+            {/* <p className="text-center text-gray-600 mb-8 italic">{message}</p> */}
 
             {courses.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -46,12 +53,12 @@ function ViewAllCourses() {
                             className="bg-gradient-to-r from-white to-blue-50 border border-blue-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out"
                         >
                             <h3 className="text-2xl font-bold text-gray-800 mb-3">{course.name}</h3>
-                            <span className="inline-block bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full mb-4">
-                                Teacher ID: {course.teacher_id}
-                            </span>
-                            <p className="text-gray-700 leading-relaxed">
+                            {/* <span className="inline-block bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full mb-4">
+                                Teacher ID: {course.description}
+                            </span> */}
+                            {/* <p className="text-gray-700 leading-relaxed">
                                 {course.description || "Bu kurs haqida batafsil ma'lumot yo'q."}
-                            </p>
+                            </p> */}
                         </div>
                     ))}
                 </div>

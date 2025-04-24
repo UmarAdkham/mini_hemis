@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import routes from "./routes";
@@ -9,7 +8,7 @@ function App() {
     <Routes>
       {/* Public Route */}
       <Route path="/" element={<Navigate to="/login" replace />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/login" element={<Login />} /> 
       {/* Private Routes */}
       {routes.map(({ path, layout: Layout, children }) => (
         <Route key={path} path={path} element={<Layout />}>
