@@ -14,6 +14,12 @@ import SingleCourse from "../pages/Teacher/SingleCourse";
 import StudentTable from "../pages/Admin/AllUsers";
 
 
+
+
+import StudentCoursePage from "../pages/Student/StudentCoursePage";
+import MyCourse from "../pages/Student/MyCourse";
+ 
+
 export const routes = [
   {
     path: "/admin",
@@ -32,10 +38,10 @@ export const routes = [
     children: [{ path: "", element: <Teacher /> }],
     children: [
       { path: "", element: <Teacher /> },
-      { path: "add-materials", element: <AddMaterials /> },
+      { path: "add-materials/:course_id", element: <AddMaterials /> },
       { path: ":teacherId/courses", element: <ViewAllCourses /> },
       { path: "view-teacher-courses", element: <ViewAllCourses /> },
-      { path: "add-task", element: <AddTask /> },
+      { path: "add-task/:id", element: <AddTask /> },
       { path: "single-course/:id", element: <SingleCourse />}
     ],
   },
@@ -44,7 +50,13 @@ export const routes = [
     layout: StudentLayout,
     children: [
       { path: "", element: <Student /> },
-      { path: "viewStudent", element: <ViewStudents /> }
+      { path: "viewStudent", element: <ViewStudents /> },
+      { path: "view-all-course", element: <StudentCoursePage /> },
+      { path: "my-course", element: <MyCourse /> }
+
+
+
+
     ],
   },  
   {
