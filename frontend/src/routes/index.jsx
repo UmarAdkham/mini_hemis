@@ -11,6 +11,7 @@ import ViewAllCourses from "../pages/Teacher/ViewTeacherCourses"
 import ViewStudents from "../pages/Student/viewstudent";
 import AdminPage from "../pages/Admin/AddUserpage";
 import ViewAllTeachers from "../pages/Admin/ViewAllTeacher";
+import StudentTable from "../pages/Admin/AllUsers";
 
 export const routes = [
   {
