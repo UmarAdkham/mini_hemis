@@ -1,5 +1,6 @@
 const pool = require("../../config/db");
 exports.viewCourseStudents = async (req, res) => {
+  const { student_id } = req.params;
   try {
     const query = `
       SELECT 
@@ -12,11 +13,13 @@ exports.viewCourseStudents = async (req, res) => {
       FROM courses c
       INNER JOIN enrollment e ON c.id = e.course_id
       INNER JOIN users u ON e.student_id = u.id
-      WHERE u.role = 'student'
+      WHERE u.role = 'student' and u.id=$1
       ORDER BY c.id, u.firstname
     `;
 
-    const result = await pool.query(query);
+    const values = [student_id];
+
+    const result = await pool.query(query, values);
 
     if (result.rows.length === 0) {
       return res.status(404).json({ message: "Hech qanday talaba topilmadi" });
@@ -26,7 +29,6 @@ exports.viewCourseStudents = async (req, res) => {
       message: "Talabalar ro'yxati muvaffaqiyatli olindi",
       data: result.rows,
     });
-
   } catch (error) {
     console.error("Xatolik:", error);
     res.status(500).json({ message: "Talabalarni olishda xatolik yuz berdi" });
