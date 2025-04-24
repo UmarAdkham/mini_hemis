@@ -12,6 +12,7 @@ import ViewStudents from "../pages/Student/viewstudent";
 import AdminPage from "../pages/Admin/AddUserpage";
 import ViewAllTeachers from "../pages/Admin/ViewAllTeacher";
 import SingleCourse from "../pages/Teacher/SingleCourse";
+import StudentTable from "../pages/Admin/AllUsers";
 
 export const routes = [
   {
