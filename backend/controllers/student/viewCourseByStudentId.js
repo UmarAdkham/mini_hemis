@@ -1,8 +1,8 @@
 const pool = require("../../config/db");
 
-const viewCourseByStudentId = async (req, res) => {
+const viewStudentsOfCourse = async (req, res) => {
     try {
-        const { student_id } = req.query;
+        const { course_id } = req.params;
         const result = await pool.query(`
             SELECT 
                 c.id AS course_id,
@@ -14,9 +14,9 @@ const viewCourseByStudentId = async (req, res) => {
             FROM courses c
             INNER JOIN enrollment e ON c.id = e.course_id
             INNER JOIN users u ON e.student_id = u.id
-            WHERE u.id = $1 AND u.role = 'student'
+            WHERE c.id = $1 AND u.role = 'student'
             ORDER BY c.id, u.firstname
-        `, [student_id]);
+        `, [course_id]);
         if (result.rows.length === 0) {
             return res.status(404).json({ message: "Hech qanday talaba topilmadi" });
         }
@@ -30,4 +30,4 @@ const viewCourseByStudentId = async (req, res) => {
     }
 };
 
-module.exports = viewCourseByStudentId;
+module.exports = viewStudentsOfCourse;

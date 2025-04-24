@@ -19,12 +19,14 @@ const { getAllCourses } = require("../controllers/teacher/viewCourses");
 const { deleteStudent } = require("../controllers/teacher/deleteStudent");
 const { viewCourseStudents } = require("../controllers/student/viewCourses");
 const uploadMiddleware = require("../middlewares/uploadFile");
+const viewStudentsOfCourse = require("../controllers/student/viewCourseByStudentId");
 // ...
 
 // material routes
 teacherRouter.post("/add-materials", uploadMiddleware, addMaterials);
 teacherRouter.get("/get-all-materials", getAllMaterials);
 teacherRouter.get("/get-material-detail/:course_id", getMaterialById);
+teacherRouter.get("/get-course-students/:course_id", viewStudentsOfCourse);
 
 // grade student work routes
 teacherRouter.put("/:id/grade", gradeWork);
