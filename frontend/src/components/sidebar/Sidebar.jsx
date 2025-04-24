@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 
-function Sidebar({ paths }) {
+function Sidebar({ paths, panelName }) {
   return (
     <div className="sidebar">
       <button
@@ -42,7 +42,7 @@ function Sidebar({ paths }) {
               alt="Flowbite Logo"
             />
             <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-              Teacher panel
+              {panelName} panel
             </span>
           </a>
           <ul className="space-y-2 font-medium">
