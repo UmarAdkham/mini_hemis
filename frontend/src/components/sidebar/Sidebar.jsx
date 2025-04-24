@@ -48,8 +48,23 @@ function Sidebar({ paths, panelName }) {
           <ul className="space-y-2 font-medium">
             {paths.map((path) => (
               <li key={path}>
-                <NavLink
-                  to={`/${path}`}
+               {path === '/' ? (
+                  <NavLink
+                  to={`/teacher`}
+                  className={({ isActive }) =>
+                    `flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group ${
+                      isActive ? "bg-gray-100 dark:bg-gray-700" : ""
+                    }`
+                  }
+                  end
+                >
+                  <span className="ms-3">
+                    {panelName}
+                  </span>
+                </NavLink>
+                ) : (
+                  <NavLink
+                  to={`/teacher/${path}`}
                   className={({ isActive }) =>
                     `flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group ${
                       isActive ? "bg-gray-100 dark:bg-gray-700" : ""
@@ -67,6 +82,7 @@ function Sidebar({ paths, panelName }) {
                       .join(" ")}
                   </span>
                 </NavLink>
+                )}
               </li>
             ))}
           </ul>
