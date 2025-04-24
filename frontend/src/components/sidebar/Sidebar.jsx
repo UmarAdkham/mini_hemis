@@ -47,7 +47,7 @@ function Sidebar({ paths, panelName }) {
               alt="Flowbite Logo"
             />
             <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-              {panelName} panel
+              {panelName.charAt(0).toUpperCase() + panelName.slice(1)} panel
             </span>
           </a>
           <ul className="space-y-2 font-medium">
@@ -55,7 +55,7 @@ function Sidebar({ paths, panelName }) {
               <li key={path}>
                {path === '/' ? (
                   <NavLink
-                  to={`/teacher`}
+                  to={`/${panelName}`}
                   className={({ isActive }) =>
                     `flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group ${
                       isActive ? "bg-gray-100 dark:bg-gray-700" : ""
@@ -64,7 +64,7 @@ function Sidebar({ paths, panelName }) {
                   end
                 >
                   <span className="ms-3">
-                    {panelName}
+                    {panelName.charAt(0).toUpperCase() + panelName.slice(1)}
                   </span>
                 </NavLink>
                 ) : (
