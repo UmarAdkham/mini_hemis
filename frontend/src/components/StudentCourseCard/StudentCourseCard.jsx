@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 
-function StudentCourseCard({
-    name, teacher,handleJoinCourse, courseId
-    
-}) {
-    
+function StudentCourseCard({ name, teacher, handleJoinCourse, courseId, isJoined }) {
+    const [isCourseJoined, setIsCourseJoined] = useState(isJoined);
+
+    // Buttonning holatini tekshirish
+    useEffect(() => {
+        setIsCourseJoined(isJoined);
+    }, [isJoined]);
+
     return (
         <div>
             <div className="m-5">
-
                 <div className="group mx-2 mt-10 grid max-w-screen-lg grid-cols-1 space-x-8 overflow-hidden rounded-lg border text-gray-700 shadow transition hover:shadow-lg sm:mx-auto sm:grid-cols-5">
                     <a href="#" className="col-span-2 text-left text-gray-600 hover:text-gray-700">
                         <div className="group relative h-full w-full overflow-hidden">
@@ -26,15 +28,20 @@ function StudentCourseCard({
                         <div className="flex flex-col text-gray-700 sm:flex-row">
                             <div className="flex h-fit space-x-2 text-sm font-medium">
                             </div>
-                            <a href="#" className="my-5 rounded-md px-5 py-2 text-center transition hover:scale-105 bg-orange-600 text-white sm:ml-auto" onClick={()=>{handleJoinCourse(courseId)}}>Join Course </a>
+                            {/* Kursga qo‘shilish buttoni */}
+                            <button
+                                className={`my-5 rounded-md px-5 py-2 text-center transition hover:scale-105 bg-orange-600 text-white sm:ml-auto ${isCourseJoined ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                onClick={() => handleJoinCourse(courseId)}
+                                disabled={isCourseJoined} // Agar kursga qo‘shilgan bo‘lsa, buttonni disabled qilamiz
+                            >
+                                {isCourseJoined ? 'Kursga yozildingiz' : 'Join Course'}
+                            </button>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
-    )
+    );
 }
 
-export default StudentCourseCard
+export default StudentCourseCard;

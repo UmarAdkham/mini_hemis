@@ -28,14 +28,14 @@ function StudentCoursePage() {
     const handleJoinCourse = async (courseId) => {
         try {
             setError(null); // Oldingi xatolarni tozalash
-
+    
             // Token tekshiruvi
             if (!token) {
                 setError('Tizimga kirilmagan. Iltimos, login qiling.');
                 navigate('/login');
                 return;
             }
-
+    
             // studentId tekshiruvi
             if (!studentId) {
                 const profileRes = await axios.get('http://localhost:4000/user-profile', {
@@ -44,13 +44,13 @@ function StudentCoursePage() {
                         'Content-Type': 'application/json',
                     },
                 });
-
+    
                 studentId = profileRes.data.student_id || profileRes.data.id;
                 if (!studentId) {
                     throw new Error('Talaba ID topilmadi.');
                 }
             }
-
+    
             // Kursga qo‘shilish uchun POST so‘rov
             const response = await axios.post(
                 'http://localhost:4000/student/join',
@@ -65,17 +65,23 @@ function StudentCoursePage() {
                     },
                 }
             );
-
+    
             console.log('Kursga qo‘shilish javobi:', response.data);
-
-            // Muvaffaqiyat xabari
-            toast.success('Kursga muvaffaqiyatli yozildingiz!', {
-                position: 'top-right',
-                autoClose: 3000,
-            });
-
-            // my-course sahifasiga o‘tish
-            navigate('/student/my-course');
+    
+            // Agar kursga allaqachon qo‘shilgan bo‘lsa, alert ko‘rsatish
+            if (response.status === 400) {
+                alert('Siz allaqachon ushbu kursga qo‘shilgansiz');
+            } else {
+                // Muvaffaqiyat xabari
+                toast.success('Kursga muvaffaqiyatli yozildingiz!', {
+                    position: 'top-right',
+                    autoClose: 3000,
+                });
+    
+                // my-course sahifasiga o‘tish
+                navigate('/student/my-course');
+            }
+    
         } catch (error) {
             console.error('Kursga qo‘shilishda xato:', error);
             const errorMsg = error.response?.data?.message || 'Kursga qo‘shilishda xato yuz berdi.';
@@ -86,7 +92,7 @@ function StudentCoursePage() {
             });
         }
     };
-
+    
     // Barcha kurslarni olish
     useEffect(() => {
         const getCourses = async () => {
@@ -105,6 +111,7 @@ function StudentCoursePage() {
                     },
                 });
 
+            
                 console.log('API javobi:', res.data);
 
                 // Ma’lumotlar array ekanligini tekshirish
