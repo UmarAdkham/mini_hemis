@@ -9,15 +9,16 @@ const ViewAllTeachers = () => {
     useEffect(() => {
         const fetchTeachers = async () => {
             try {
-                const response = await fetch('http://localhost:4000/admin/teachers', {
-                    method: 'GET',
+                const response = await axios.get('http://localhost:4000/admin/teachers', {
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${localStorage.getItem('token')}`,
                     },
                 });
+
                 setTeachers(response.data.teachers);
             } catch (err) {
+                console.log(err);
                 setError('O‘qituvchilarni yuklashda xatolik yuz berdi!');
             } finally {
                 setLoading(false);
