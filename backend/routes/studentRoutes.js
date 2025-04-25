@@ -11,6 +11,7 @@ const submitWork = require("../controllers/student/submitWork");
 const { checkRole } = require("../middlewares/checkRole");
 const { viewCourseStudents } = require("../controllers/student/viewCourses");
 const { joinCourse } = require("../controllers/student/joinCourse");
+const { getCourseMaterials } = require("../controllers/student/getallMaterial");
 
 studentRoute.use(checkRole(["student"]));
 studentRoute.post("/", createStudent);
@@ -19,6 +20,7 @@ studentRoute.get("/view-grades/:student_id", getStudenttask);
 studentRoute.get("/view-all-courses/", getAllCourses);
 studentRoute.post("/join", joinCourse);
 studentRoute.get('/my-course/:id',viewCourseStudents)
+studentRoute.get("/get-course-materials/:courseId", getCourseMaterials);
  
 
 module.exports = studentRoute;
