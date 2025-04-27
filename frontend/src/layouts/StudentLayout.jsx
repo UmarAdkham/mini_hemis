@@ -4,9 +4,9 @@ import Sidebar from "../components/sidebar/Sidebar";
 
 function StudentLayout() {
   return (
-    <div className="flex">
+    <div>
       <Sidebar paths={['/','view-all-course','my-course']} panelName={'student'}/>
-      <main className="flex-1 sm:ml-64">
+      <main className="sm:ml-64">
         <Outlet />
       </main>
     </div>

@@ -13,16 +13,17 @@ const AddTask = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Title:", title);
-    console.log("Description:", description);
-    console.log("File:", file);
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("file", file);
     // Add your form submission logic here
   };
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
       <form onSubmit={handleSubmit}>
-        <h2 className="text-2xl font-bold text-center mb-5">Upload Form</h2>
+        <h2 className="text-2xl font-bold text-center mb-5">Add task</h2>
         <div className="mb-4">
           <label
             htmlFor="title"
