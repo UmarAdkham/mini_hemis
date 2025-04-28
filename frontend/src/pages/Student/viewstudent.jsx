@@ -1,9 +1,15 @@
+<<<<<<< Updated upstream
 // import React, { useEffect, useState } from 'react';
+=======
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+>>>>>>> Stashed changes
 
 // const ViewStudents = () => {
 //   const [students, setStudents] = useState([]);
 //   const [loading, setLoading] = useState(true);
 
+<<<<<<< Updated upstream
 //   useEffect(() => {
 //     fetch('http://localhost:4000/student/students',{
 //       method: 'GET',
@@ -22,6 +28,23 @@
 //         setLoading(false);
 //       });
 //   }, []);
+=======
+  useEffect(() => {
+    console.log('Component mounted, fetching students...');
+    
+    axios.get('http://localhost:4000/api/students') // Endpoint manzilingiz
+      .then(response => {
+        console.log('Backenddan olingan talabalar:', response.data.students); // backenddan olingan talabalar
+        
+        setStudents(response.data.students); // backendda `students: result.rows` bor
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, []);
+>>>>>>> Stashed changes
 
 //   if (loading) {
 //     return <div className="text-center mt-10 text-xl font-medium">Yuklanmoqda...</div>;
