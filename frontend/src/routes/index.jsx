@@ -21,7 +21,9 @@ export const routes = [
       { path: "", element: <Admin /> },
     
       { path: 'add-user', element: <AdminPage /> },
-      { path: 'view-all-teachers', element: <ViewAllTeachers /> }
+      { path: 'view-all-teachers', element: <ViewAllTeachers /> },
+      {path:"all-users", element:<StudentTable/>},
+
     ],
   },
   {
@@ -32,7 +34,7 @@ export const routes = [
       { path: "add-materials", element: <AddMaterials /> },
       { path: ":teacherId/courses", element: <ViewAllCourses /> },
       { path: "view-teacher-courses", element: <ViewAllCourses /> },
-      { path: "add-task", element: <AddTask /> }
+      { path: "add-task", element: <AddTask /> },
     ],
   },
   {

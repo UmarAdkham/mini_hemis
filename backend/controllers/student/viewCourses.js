@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-const pool = require(".../config/db");
+const pool = require("../../config/db");
 
 exports.getAllCourses = async (req, res) => {
   try {
@@ -16,8 +15,8 @@ exports.getAllCourses = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send({ message: "Kurslarni olishda xatolik yuz berdi" });
-=======
-const pool = require("../../config/db");
+  }
+}
 exports.viewCourseStudents = async (req, res) => {
   try {
     const query = `
@@ -49,6 +48,5 @@ exports.viewCourseStudents = async (req, res) => {
   } catch (error) {
     console.error("Xatolik:", error);
     res.status(500).json({ message: "Talabalarni olishda xatolik yuz berdi" });
->>>>>>> 564b437d82f72cd4731362773fbfe42ff4008aa3
   }
 };
