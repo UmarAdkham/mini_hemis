@@ -15,7 +15,8 @@ import SingleCourse from "../pages/Teacher/SingleCourse";
 import StudentTable from "../pages/Admin/AllUsers";
 import StudentCoursePage from "../pages/Student/StudentCoursePage";
 import MyCourse from "../pages/Student/MyCourse";
- 
+import Viewmaterials from "../pages/Student/Viewmaterials";
+
 export const routes = [
   {
     path: "/admin",
@@ -36,7 +37,7 @@ export const routes = [
       { path: ":teacherId/courses", element: <ViewAllCourses /> },
       { path: "view-teacher-courses", element: <ViewAllCourses /> },
       { path: "add-task/:id", element: <AddTask /> },
-      { path: "single-course/:id", element: <SingleCourse />}
+      { path: "single-course/:id", element: <SingleCourse /> }
     ],
   },
   {
@@ -46,10 +47,8 @@ export const routes = [
       { path: "", element: <Student /> },
       { path: "viewStudent", element: <ViewStudents /> },
       { path: "view-all-course", element: <StudentCoursePage /> },
-      { path: "my-course", element: <MyCourse /> }
-
-
-
+      { path: "my-course", element: <MyCourse /> },
+      { path: "my-course/course/:id", element: <Viewmaterials /> }
     ],
   },
 ];

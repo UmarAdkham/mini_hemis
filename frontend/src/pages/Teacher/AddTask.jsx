@@ -1,97 +1,80 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { useParams } from "react-router-dom";
 
 const AddTask = () => {
-  const { course_id } = useParams(); // URL params orqali course_id olinadi
-  const [tasks, setTasks] = useState([]);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [file, setFile] = useState(null);
 
-  const handleChange = (index, field, value) => {
-    const updated = [...tasks];
-    updated[index][field] = value;
-    setTasks(updated);
-  };
-
-  const handleFileChange = (index, file) => {
-    const updated = [...tasks];
-    updated[index].file = file;
-    setTasks(updated);
-  };
-
-  const handleAddTask = () => {
-    setTasks([
-      ...tasks,
-      { id: Date.now(), title: "", description: "", file: null },
-    ]);
-  };
-
-  const handleSubmit = async (task) => {
-    const formData = new FormData();
-    formData.append("title", task.title);
-    formData.append("description", task.description);
-    formData.append("course_id", course_id); // URL params orqali keldi
-    formData.append("file", task.file);
-
-    try {
-      const res = await axios.post(
-        "http://localhost:4000/teacher/add-task",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      alert("Topshiriq yuborildi");
-      console.log(res.data);
-    } catch (err) {
-      console.error("Xatolik:", err);
-      alert("Xatolik yuz berdi");
+  const handleFileChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      setFile(event.target.files[0]);
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Title:", title);
+    console.log("Description:", description);
+    console.log("File:", file);
+    // Add your form submission logic here
+  };
+
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-2xl font-semibold mb-6 text-gray-800">Topshiriq Qo‘shish</h1>
-
-      <button
-        onClick={handleAddTask}
-        className="mb-6 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700"
-      >
-        + Yangi Topshiriq
-      </button>
-
-      <div className="space-y-6">
-        {tasks.map((task, i) => (
-          <div key={task.id} className="bg-white rounded-2xl shadow-md p-5 space-y-4">
-            <input
-              type="text"
-              placeholder="Sarlavha"
-              className="w-full p-3 border border-gray-300 rounded-xl"
-              value={task.title}
-              onChange={(e) => handleChange(i, "title", e.target.value)}
-            />
-            <textarea
-              placeholder="Tavsif"
-              className="w-full p-3 border border-gray-300 rounded-xl"
-              value={task.description}
-              onChange={(e) => handleChange(i, "description", e.target.value)}
-            />
-            <input
-              type="file"
-              accept=".pdf,.doc,.docx,.txt"
-              className="w-full border border-dashed border-gray-400 p-3 rounded-xl bg-gray-50"
-              onChange={(e) => handleFileChange(i, e.target.files[0])}
-            />
-            <button
-              onClick={() => handleSubmit(task)}
-              className="px-4 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700"
-            >
-              Yuborish
-            </button>
-          </div>
-        ))}
-      </div>
+    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
+      <form onSubmit={handleSubmit}>
+        <h2 className="text-2xl font-bold text-center mb-5">Upload Form</h2>
+        <div className="mb-4">
+          <label
+            htmlFor="title"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Title
+          </label>
+          <input
+            type="text"
+            id="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter title"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          />
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Description
+          </label>
+          <textarea
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Enter description"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          ></textarea>
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="file"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Upload File
+          </label>
+          <input
+            type="file"
+            id="file"
+            onChange={handleFileChange}
+            className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+          />
+        </div>
+        <button
+          type="submit"
+          className="w-full px-4 py-2 text-white bg-blue-600 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
+          Submit
+        </button>
+      </form>
     </div>
   );
 };
