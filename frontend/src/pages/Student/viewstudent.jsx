@@ -1,15 +1,11 @@
-<<<<<<< Updated upstream
-// import React, { useEffect, useState } from 'react';
-=======
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
->>>>>>> Stashed changes
 
 // const ViewStudents = () => {
 //   const [students, setStudents] = useState([]);
 //   const [loading, setLoading] = useState(true);
 
-<<<<<<< Updated upstream
+
 //   useEffect(() => {
 //     fetch('http://localhost:4000/student/students',{
 //       method: 'GET',
@@ -28,7 +24,7 @@ import React, { useEffect, useState } from 'react';
 //         setLoading(false);
 //       });
 //   }, []);
-=======
+
   useEffect(() => {
     console.log('Component mounted, fetching students...');
     
@@ -44,7 +40,7 @@ import React, { useEffect, useState } from 'react';
         setLoading(false);
       });
   }, []);
->>>>>>> Stashed changes
+
 
 //   if (loading) {
 //     return <div className="text-center mt-10 text-xl font-medium">Yuklanmoqda...</div>;
