@@ -16,7 +16,7 @@ const { gradeWork } = require("../controllers/teacher/gradeStudent");
 
 // import courses controllers
 const { getAllCourses, addTask, getAllTasks } = require("../controllers/teacher/viewCourses");
-const { deleteStudent } = require("../controllers/teacher/deleteStudent");
+const { deleteStudent, removeStudent } = require("../controllers/teacher/removeSudent");
 const { viewCourseStudents } = require("../controllers/student/viewCourses");
 const uploadMiddleware = require("../middlewares/uploadFile");
 const viewStudentsOfCourse = require("../controllers/student/viewCourseByStudentId");
@@ -36,7 +36,8 @@ teacherRouter.get("/get-course-students/:course_id", viewStudentsOfCourse);
 teacherRouter.put("/:id/grade", gradeWork);
 
 // student routes
-teacherRouter.delete("/delete-student/:id", deleteStudent);
+// teacherRouter.delete("/delete-student/:id", deleteStudent);
+teacherRouter.delete("/remove-student/:enrollment_id", removeStudent);
 
 // courses routes
 teacherRouter.get("/:teacherId/courses", getAllCourses);

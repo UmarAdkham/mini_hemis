@@ -5,6 +5,7 @@ const viewStudentsOfCourse = async (req, res) => {
         const { course_id } = req.params;
         const result = await pool.query(`
             SELECT 
+                e.id AS enrollment_id,
                 c.id AS course_id,
                 c.name AS course_name,
                 u.id AS student_id,
