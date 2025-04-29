@@ -17,7 +17,8 @@ import StudentCoursePage from "../pages/Student/StudentCoursePage";
 import MyCourse from "../pages/Student/MyCourse";
 import Viewmaterials from "../pages/Student/Viewmaterials";
 import CreateCourse from "../pages/Admin/CreateCourse";
-
+import SubmitWorkPage from "../pages/Student/SubmitWorkPage";
+ 
 export const routes = [
   {
     path: "/admin",
@@ -50,7 +51,9 @@ export const routes = [
       { path: "viewStudent", element: <ViewStudents /> },
       { path: "view-all-course", element: <StudentCoursePage /> },
       { path: "my-course", element: <MyCourse /> },
-      { path: "my-course/course/:id", element: <Viewmaterials /> }
+      { path: "my-course/course/:id", element: <Viewmaterials /> },
+      { path:"submit/:taskId", element:<SubmitWorkPage/>}
+      
     ],
   },
 ];
