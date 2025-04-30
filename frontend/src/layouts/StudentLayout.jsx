@@ -5,7 +5,7 @@ import Sidebar from "../components/sidebar/Sidebar";
 function StudentLayout() {
   return (
     <div className="flex">
-      <Sidebar paths={['/','view-all-course','my-course']} panelName={'student'}/>
+      <Sidebar paths={['/','view-all-course','my-course','task']} panelName={'student'}/>
       <main className="flex-1 sm:ml-64">
         <Outlet />
       </main>

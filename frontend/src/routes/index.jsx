@@ -18,6 +18,7 @@ import MyCourse from "../pages/Student/MyCourse";
 import Viewmaterials from "../pages/Student/Viewmaterials";
 import CreateCourse from "../pages/Admin/CreateCourse";
 import SubmitWorkPage from "../pages/Student/SubmitWorkPage";
+import GetAllTasks from "../pages/Student/GetAllTasks";
  
 export const routes = [
   {
@@ -52,7 +53,9 @@ export const routes = [
       { path: "view-all-course", element: <StudentCoursePage /> },
       { path: "my-course", element: <MyCourse /> },
       { path: "my-course/course/:id", element: <Viewmaterials /> },
-      { path:"submit/:taskId", element:<SubmitWorkPage/>}
+      { path:"submit/:taskId", element:<SubmitWorkPage/>},
+      { path:"task", element:<GetAllTasks/>}
+
       
     ],
   },
