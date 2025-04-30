@@ -76,9 +76,7 @@ function Viewmaterials() {
             >
               Yuklab olish
             </a>
-            <button>
-              <Link to={`/student/submit/${material.id}`}>Upload Work</Link>
-            </button>
+            
           </div>
         ))
       ) : (

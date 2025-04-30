@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function GetAllTasks() {
   const [tasks, setTasks] = useState([]);
@@ -101,6 +102,9 @@ function GetAllTasks() {
             <div className="mt-4 flex justify-between text-sm text-gray-500">
               <span>Topshiriq ID: {task.id}</span>
               <span>Kurs ID: {task.course_id}</span>
+              <button>
+              <Link to={`/student/submit/${task.id}`}>Upload Work</Link>
+            </button>
             </div>
           </div>
         ))}
