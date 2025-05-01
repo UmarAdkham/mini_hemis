@@ -45,6 +45,6 @@ teacherRouter.get("/:teacherId/courses", getAllCourses);
 teacherRouter.post("/add-task", addTask)
 teacherRouter.get('/get-tasks',getAllTasks)
 teacherRouter.get("/course-students", viewCourseStudents);
-teacherRouter.get('/studentwork', getAllSubmitWorks)
+teacherRouter.get('/student-work/:teacherId', getAllSubmitWorks)
 
 module.exports = teacherRouter;

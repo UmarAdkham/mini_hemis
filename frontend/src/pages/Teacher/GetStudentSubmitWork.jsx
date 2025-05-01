@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 function GetTeacherSubmitWorks() {
-  const { id } = useParams(); // Kurs ID’sini olish
+  const { id } = JSON.parse(localStorage.getItem('user'));
   const [submitWorks, setSubmitWorks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -32,7 +32,7 @@ function GetTeacherSubmitWorks() {
         }
 
         // API so‘rovi (kurs ID’si bo‘yicha filtrlangan ishlarni olish)
-        const res = await axios.get(`http://localhost:4000/teacher/studentwork?course_id=${id}`, {
+        const res = await axios.get(`http://localhost:4000/teacher/student-work/45`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
