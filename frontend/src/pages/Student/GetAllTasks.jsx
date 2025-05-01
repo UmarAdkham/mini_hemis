@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 function GetAllTasks() {
   const [tasks, setTasks] = useState([]);
@@ -8,8 +8,9 @@ function GetAllTasks() {
   const [error, setError] = useState(null);
 
   // Kurs ID sini statik sifatida 9 qilib o‘rnatamiz
-  const courseId = 9;
-
+  const {courseId} = useParams();
+  console.log(courseId);
+  
   useEffect(() => {
     const getTasks = async () => {
       setLoading(true);

@@ -58,9 +58,9 @@ function Viewmaterials() {
     return <div>Yuklanmoqda...</div>;
   }
 
-  if (error) {
-    return <div className="text-red-500">{error}</div>;
-  }
+  // if (error) {
+  //   return <div className="text-red-500">{error}</div>;
+  // }
 
   return (
     <div>
@@ -84,6 +84,10 @@ function Viewmaterials() {
           Materiallar mavjud emas.
         </div>
       )}
+      <Link
+        to={`/student/task/${id}`}
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      >Tasks</Link>
     </div>
   );
 }

@@ -58,7 +58,7 @@ export const routes = [
       { path: "my-course", element: <MyCourse /> },
       { path: "my-course/course/:id", element: <Viewmaterials /> },
       { path:"submit/:taskId", element:<SubmitWorkPage/>},
-      { path:"task", element:<GetAllTasks/>}
+      { path:"task/:courseId", element:<GetAllTasks/>}
 
       
     ],
