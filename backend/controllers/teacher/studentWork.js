@@ -37,7 +37,7 @@ exports.getAllSubmitWorks = async (req, res) => {
     const { course_id } = req.query;
     let queryText = `
       SELECT sw.id, sw.title, sw.filepath, sw.grade, sw.student_id, sw.task_id, 
-             u.name AS student_name, t.title AS task_title, c.title AS course_title
+             u.firstname AS student_name, t.title AS task_title, c.name AS course_title
       FROM studentwork sw
       JOIN tasks t ON sw.task_id = t.id
       JOIN courses c ON t.course_id = c.id
