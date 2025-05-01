@@ -36,23 +36,23 @@ function SingleCourse() {
   }, [id]);
 
   const removeStudent = (enrollment_id) => {
-    axios.delete(
-      `http://localhost:4000/teacher/remove-student/${enrollment_id}`,
-      {
+    axios
+      .delete(`http://localhost:4000/teacher/remove-student/${enrollment_id}`, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         },
-      }
-    )
+      })
       .then((response) => {
         console.log(response.data);
-        setStudents(students.filter((student) => student.enrollment_id !== enrollment_id));
+        setStudents(
+          students.filter((student) => student.enrollment_id !== enrollment_id)
+        );
       })
       .catch((error) => {
         console.error(error);
       });
-}
+  };
 
   if (loading)
     return <div className="text-center py-6 text-blue-500">Yuklanmoqda...</div>;
@@ -77,6 +77,19 @@ function SingleCourse() {
             className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-all"
           >
             Add Material
+          </button>
+          <button
+            onClick={() => {
+              if (!id || isNaN(id)) {
+                console.error("Noto‘g‘ri kurs ID’si:", id);
+                return;
+              }
+              console.log("Navigating to course ID:", id);
+              navigate(`/teacher/getstudentwork/${id}`);
+            }}
+            className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-all"
+          >
+            View Student Work
           </button>
         </div>
       </div>
@@ -122,7 +135,10 @@ function SingleCourse() {
                     {student.username}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
-                    <button className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-all cursor-pointer" onClick={() => removeStudent(student.enrollment_id)}>
+                    <button
+                      className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-all cursor-pointer"
+                      onClick={() => removeStudent(student.enrollment_id)}
+                    >
                       Remove
                     </button>
                   </td>

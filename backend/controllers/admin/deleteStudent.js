@@ -1,4 +1,5 @@
 const express = require("express");
+const pool = require('../../config/db')
 
 // Student o'chirish
 exports.deleteStudent = async (req, res) => {

@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
-function GetStudentSubmitWork() {
+function GetTeacherSubmitWorks() {
+  const { id } = useParams(); // Kurs ID’sini olish
   const [submitWorks, setSubmitWorks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const getSubmitWorks = async () => {
+    const fetchSubmitWorks = async () => {
       setLoading(true);
       setError(null);
 
       try {
+        // Kurs ID’sini tekshirish
+        if (!id || isNaN(id)) {
+          throw new Error('Noto‘g‘ri kurs ID’si.');
+        }
+
         // Tokenni localStorage dan olish
         const token = localStorage.getItem('token');
         if (!token) {
-          throw new Error('Token topilmadi. Tizimga kiring.');
+          throw new Error('Tizimga kirish talab qilinadi.');
         }
 
         // User ma'lumotlarini olish
@@ -24,15 +31,17 @@ function GetStudentSubmitWork() {
           throw new Error('Foydalanuvchi ma‘lumotlari topilmadi.');
         }
 
-        // API so‘rovi
-        const res = await axios.get('http://localhost:4000/teacher/submitworks', {
+        // API so‘rovi (kurs ID’si bo‘yicha filtrlangan ishlarni olish)
+        const res = await axios.get(`http://localhost:4000/teacher/studentwork?course_id=${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log(res);
+        
 
         // API javobini tekshirish
-        if (res.data.message === 'Topshirilgan ismlar topilmadi') {
+        if (res.data.message === 'Topshirilgan ismlar topilmadi' || !res.data.length) {
           setSubmitWorks([]);
         } else {
           setSubmitWorks(res.data);
@@ -45,12 +54,12 @@ function GetStudentSubmitWork() {
       }
     };
 
-    getSubmitWorks();
-  }, []);
+    fetchSubmitWorks();
+  }, [id]); // id o‘zgarganda qayta so‘rov yuborish
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center py-8">
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">Topshirilgan Ishlar</h1>
+      <h1 className="text-3xl font-bold text-gray-800 mb-6">Kurs bo‘yicha Topshirilgan Ishlar</h1>
 
       {loading && (
         <div className="flex justify-center items-center">
@@ -115,8 +124,9 @@ function GetStudentSubmitWork() {
               Baho: {work.grade ? work.grade : 'Baholanmagan'}
             </p>
             <div className="mt-4 flex justify-between text-sm text-gray-500">
-              <span>Talaba ID: {work.student_id}</span>
-              <span>Topshiriq ID: {work.task_id}</span>
+              <span>Talaba: {work.student_name || work.student_id}</span>
+              <span>Topshiriq: {work.task_title || work.task_id}</span>
+              <span>Kurs: {work.course_title || 'Noma‘lum'}</span>
             </div>
           </div>
         ))}
@@ -125,4 +135,4 @@ function GetStudentSubmitWork() {
   );
 }
 
-export default GetStudentSubmitWork;
+export default GetTeacherSubmitWorks;
