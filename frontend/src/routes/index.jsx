@@ -19,6 +19,7 @@ import Viewmaterials from "../pages/Student/Viewmaterials";
 import CreateCourse from "../pages/Admin/CreateCourse";
 import SubmitWorkPage from "../pages/Student/SubmitWorkPage";
 import GetAllTasks from "../pages/Student/GetAllTasks";
+import GetStudentSubmitWork from "../pages/Teacher/GetStudentSubmitWork";
  
 export const routes = [
   {
@@ -41,7 +42,10 @@ export const routes = [
       { path: ":teacherId/courses", element: <ViewAllCourses /> },
       { path: "view-teacher-courses", element: <ViewAllCourses /> },
       { path: "add-task/:id", element: <AddTask /> },
-      { path: "single-course/:id", element: <SingleCourse /> }
+      { path: "single-course/:id", element: <SingleCourse /> },
+      { path: "getstudentwork", element: <GetStudentSubmitWork /> }
+
+
     ],
   },
   {

@@ -21,6 +21,7 @@ const { viewCourseStudents } = require("../controllers/student/viewCourses");
 const uploadMiddleware = require("../middlewares/uploadFile");
 const viewStudentsOfCourse = require("../controllers/student/viewCourseByStudentId");
 const { checkRole } = require("../middlewares/checkRole");
+const { getAllSubmitWorks } = require("../controllers/teacher/studentWork");
 // ...
 
 
@@ -44,5 +45,6 @@ teacherRouter.get("/:teacherId/courses", getAllCourses);
 teacherRouter.post("/add-task", addTask)
 teacherRouter.get('/get-tasks',getAllTasks)
 teacherRouter.get("/course-students", viewCourseStudents);
+teacherRouter.get('/studentwork', getAllSubmitWorks)
 
 module.exports = teacherRouter;
