@@ -1,64 +1,54 @@
 import React, { useState, useEffect } from "react";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
+const token = localStorage.getItem("token");
 
 const StudentTable = () => {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-   useEffect(() => {
-    const fetchStudents = async () => {
-      try {
-        const response = await fetch("http://localhost:4000/admin/users", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        if (!response.ok) {
-          throw new Error("Ma'lumotlarni yuklashda xato");
-        }
-        const data = await response.json();
-        setStudents(data);
-        setLoading(false);
-      } catch (err) {
-        setError(err.message);
-        setLoading(false);
-      }
-    };
+  const fetchStudents = async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/admin/users", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setStudents(response.data);
+      setLoading(false);
+    } catch (err) {
+      setError(err.response?.data?.message || err.message);
+      setLoading(false);
+    }
+  };
 
+   useEffect(() => {
     fetchStudents();
   }, []);
 
-  console.log(students);
 
   // Talabani o'chirish funksiyasi
   const handleDelete = async (id) => {
-    console.log(id);
-  
-    
       try {
-        const token = localStorage.getItem("token");
         if (!token) {
           throw new Error("Tizimga kirish talab qilinadi");
         }
   
-        const response = await axios.delete(`http://localhost:4000/delete-user/${id}`, {
+        const response = await axios.delete(`http://localhost:4000/admin/delete-user/${id}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log(response);
         
-        // Muvaffaqiyatli javob
-        setStudents(students.filter((student) => student.id != id));
-        toast.success("Foydalanuvchi muvaffaqiyatli o'chirildi");
+        if (response.status === 200) {
+          fetchStudents()
+        }
       } catch (err) {
         // Xato xabarini backenddan olish yoki umumiy xato
         const errorMessage = err.response?.data?.xabar || err.message || "O'chirishda xato yuz berdi";
-        toast.error(`Xato: ${errorMessage}`);
       }
     
   };
