@@ -6,7 +6,6 @@ const removeStudentFromCourse = async (req, res) => {
 
   try {
     const result = await pool.query(
-      
       `SELECT 1
       FROM courses
       WHERE id = $1 AND teacher_id = $2`

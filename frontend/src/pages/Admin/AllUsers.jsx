@@ -6,8 +6,7 @@ const StudentTable = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // API dan talabalarni olish
-  useEffect(() => {
+   useEffect(() => {
     const fetchStudents = async () => {
       try {
         const response = await fetch("http://localhost:4000/admin/users", {
@@ -36,32 +35,37 @@ const StudentTable = () => {
 
   // Talabani o'chirish funksiyasi
   const handleDelete = async (id) => {
-    if (window.confirm("Bu talaba ma'lumotlarini o'chirishni xohlaysizmi?")) {
+    console.log(id);
+  
+    
       try {
-        const response = await fetch(
-          `http://localhost:4000/admin/delete-student/${id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("O'chirishda xato yuz berdi");
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("Tizimga kirish talab qilinadi");
         }
-        setStudents(students?.filter((student) => student.id !== id));
+  
+        const response = await axios.delete(`http://localhost:4000/delete-user/${id}`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log(response);
+        
+        // Muvaffaqiyatli javob
+        setStudents(students.filter((student) => student.id != id));
+        toast.success("Foydalanuvchi muvaffaqiyatli o'chirildi");
       } catch (err) {
-        alert("Xato: " + err.message);
+        // Xato xabarini backenddan olish yoki umumiy xato
+        const errorMessage = err.response?.data?.xabar || err.message || "O'chirishda xato yuz berdi";
+        toast.error(`Xato: ${errorMessage}`);
       }
-    }
+    
   };
 
   const handleEdit = (student) => {
     alert(`Talaba ID: ${student.student_id} uchun tahrirlash oynasi ochiladi`);
-    // Bu yerga tahrirlash logikasini qo'shishingiz mumkin (modal yoki forma)
-  };
+   };
 
   if (loading) {
     return <p className="text-center text-gray-500 mt-5">Yuklanmoqda...</p>;
