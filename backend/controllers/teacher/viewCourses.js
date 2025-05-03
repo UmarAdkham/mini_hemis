@@ -5,7 +5,7 @@ exports.getAllCourses = async (req, res) => {
     const result = await pool.query("SELECT * FROM courses");
 
     if (result.rows.length === 0) {
-      return res.status(404).send({ message: "Kurslar topilmadi" });
+      return res.status(200).json({ message: "Kurslar mavjud emas", data: [] });
     }
 
     res.status(200).json({

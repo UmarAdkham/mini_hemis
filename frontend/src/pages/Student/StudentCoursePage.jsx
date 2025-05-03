@@ -21,8 +21,6 @@ function StudentCoursePage() {
         console.error('localStorage user xatosi:', err);
     }
 
-    console.log('Token:', token);
-    console.log('Student ID:', studentId);
 
     // Kursga qo‘shilish funksiyasi
     const handleJoinCourse = async (courseId) => {
@@ -94,49 +92,32 @@ function StudentCoursePage() {
     };
     
     // Barcha kurslarni olish
-    useEffect(() => {
-        const getCourses = async () => {
-            try {
-                setLoading(true);
-                if (!token) {
-                    setError('Tizimga kirilmagan. Iltimos, login qiling.');
-                    navigate('/login');
-                    return;
-                }
-
-                const res = await axios.get('http://localhost:4000/student/view-all-courses', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                });
-
-            
-                console.log('API javobi:', res.data);
-
-                // Ma’lumotlar array ekanligini tekshirish
-                const courses = Array.isArray(res.data)
-                    ? res.data
-                    : Array.isArray(res.data.data)
-                    ? res.data.data
-                    : res.data.courses || [];
-
-                setJoinCourses(courses);
-            } catch (error) {
-                console.error('Kurslarni olishda xato:', error);
-                if (error.response?.status === 401) {
-                    setError('Tizimga kirish xatosi. Iltimos, qayta login qiling.');
-                    navigate('/login');
-                } else {
-                    setError('Kurslarni yuklashda xato. Iltimos, qayta urinib ko‘ring.');
-                }
-            } finally {
-                setLoading(false);
+    const getCourses = async () => {
+        try {
+            setLoading(true);
+            if (!token) {
+                setError('Tizimga kirilmagan. Iltimos, login qiling.');
+                navigate('/login');
+                return;
             }
-        };
 
+            const res = await axios.get('http://localhost:4000/student/view-all-courses', {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+                        
+            setJoinCourses(res.data.data);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+    useEffect(() => {
         getCourses();
-    }, [navigate, token]);
+    }, []);
 
     // Yuklanish holati
     if (loading) {
