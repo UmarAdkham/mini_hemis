@@ -80,6 +80,7 @@ const StudentTable = () => {
         </thead>
         <tbody>
           {students?.users.map((student) => (
+            student.role !== "admin" && (
             <tr key={student.id}>
               <td className="border px-4 py-2">{student.id}</td>
               <td className="border px-4 py-2">{student.firstname}</td>
@@ -102,7 +103,7 @@ const StudentTable = () => {
                 </button>
               </td>
             </tr>
-          ))}
+          )))}
         </tbody>
       </table>
     </div>
