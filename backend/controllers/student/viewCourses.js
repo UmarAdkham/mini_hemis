@@ -22,7 +22,7 @@ exports.viewCourseStudents = async (req, res) => {
     const result = await pool.query(query, values);
 
     if (result.rows.length === 0) {
-      return res.status(404).json({ message: "Hech qanday talaba topilmadi" });
+      return res.status(200).json({ message: "Hech qanday talaba topilmadi", data: [] });
     }
 
     res.status(200).json({
